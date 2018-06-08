@@ -5,6 +5,15 @@
   "icon": "https://raw.githubusercontent.com/Ho-Wan/vscode-setting-toggle/master/images/T-icon.png",
   "version": "0.0.1",
   "publisher": "Ho-Wan",
+  "author": {
+    "name": "Ho-Wan To",
+    "url": "http://www.howanto.com/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Ho-Wan/vscode-setting-toggle"
+  },
+  "bugs": "https://github.com/Ho-Wan/vscode-setting-toggle/issues",
   "engines": {
     "vscode": "^1.24.0"
   },
