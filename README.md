@@ -17,6 +17,7 @@ VS Code extension that lets you toggle a custom setting using a button or comman
     "setting-toggle.setting": "editor.minimap.enabled",
     "editor.minimap.enabled": false,
 ```
+- Can only save one setting to toggle at a time.
 
 ---
 ## Settings
@@ -28,7 +29,6 @@ VS Code extension that lets you toggle a custom setting using a button or comman
 ## Known Issues
 
 - Changes to user settings must be saved before the setting is toggled using this extension.
-
 - Extension does not automatically add new settings to user settings.
 
 ---
