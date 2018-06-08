@@ -10,22 +10,19 @@ export function activate(context: vscode.ExtensionContext) {
   console.log(`Extension "toggle-btn" is now active!`);
 
   let disposable = vscode.commands.registerCommand("extension.toggle", () => {
-
-    let settingToToggle = vscode.workspace.getConfiguration('',null).get("setting-toggle.setting");
+    const settingTitle = vscode.workspace.getConfiguration("", null).get("setting-toggle.setting");
     fs.readFile(settingsPath, "utf8", function(err, userSettings) {
       if (err) {
-        vscode.window.showErrorMessage("Error: unable to read settings.");
+        vscode.window.showErrorMessage("Error: unable to read settings. " + err);
       }
 
-      let newSettings = toggleSetting(userSettings, settingToToggle.toString());
+      const newSettings = toggleSetting(userSettings, settingTitle.toString());
       fs.writeFile(settingsPath, newSettings, function(err) {
         if (err) {
-          vscode.window.showErrorMessage("Error: unable to write settings.");
+          vscode.window.showErrorMessage("Error: unable to write settings. " + err);
         }
       });
-
     });
-
   });
 
   context.subscriptions.push(disposable);
@@ -35,27 +32,25 @@ export function deactivate() {}
 
 function toggleSetting(userSettings: string, settingTitle: string) {
   try {
-    let state = vscode.workspace.getConfiguration('',null).get(settingTitle);
-    if (typeof(state) !== "boolean") {
+    const state = vscode.workspace.getConfiguration("", null).get(settingTitle);
+    if (typeof state !== "boolean") {
       vscode.window.showErrorMessage(`Error: ${settingTitle} is not a boolean`);
       return userSettings;
     }
-    let newState = !state;
 
+    const newState = !state;
     if (userSettings.match(settingTitle)) {
-      let settings = userSettings.replace(`"${settingTitle}": ${state}`, `"${settingTitle}": ${newState}`);
+      const settings = userSettings.replace(`"${settingTitle}": ${state}`, `"${settingTitle}": ${newState}`);
       vscode.window.setStatusBarMessage(`${settingTitle} is now ${newState}`);
       return settings;
     } else {
       vscode.window.setStatusBarMessage(`${settingTitle} not found`);
       return userSettings;
     }
-  }
-  catch (err) {
-    vscode.window.showErrorMessage(err);
+  } catch (err) {
+    vscode.window.showErrorMessage("Error: cannot toggle setting. " + err);
     return userSettings;
   }
-
 }
 
 // get the PATH of settings.json (check Stable or Insiders build?)

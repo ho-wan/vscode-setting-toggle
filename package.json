@@ -1,7 +1,7 @@
 {
   "name": "setting-toggle",
   "displayName": "Setting Toggle",
-  "description": "Toggle custom setting using button or command",
+  "description": "Toggle custom setting using button or command; Defaults to codeLens.",
   "icon": "images/T-icon.png",
   "version": "0.0.1",
   "publisher": "Ho-Wan",
@@ -23,7 +23,8 @@
   "keywords": [
     "settings",
     "toggle",
-    "button"
+    "button",
+    "codeLens"
   ],
   "activationEvents": [
     "onCommand:extension.toggle"
