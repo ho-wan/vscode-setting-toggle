@@ -34,7 +34,7 @@ VS Code extension that lets you toggle a custom setting using a button or comman
 ---
 ## Release Notes
 
-### 0.0.1
+### 0.0.2
 
 Initial release of Setting Toggle
 

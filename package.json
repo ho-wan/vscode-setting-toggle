@@ -3,7 +3,7 @@
   "displayName": "Setting Toggle",
   "description": "Toggle custom setting using button or command; Defaults to codeLens.",
   "icon": "images/T-icon.png",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "publisher": "Ho-Wan",
   "author": {
     "name": "Ho-Wan To",
