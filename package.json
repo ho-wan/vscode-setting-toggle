@@ -1,38 +1,75 @@
 {
-    "name": "setting-toggle",
-    "displayName": "setting-toggle",
-    "description": "toggle custom setting using button or command",
-    "version": "0.0.1",
-    "publisher": "Ho-Wan",
-    "engines": {
-        "vscode": "^1.24.0"
-    },
-    "categories": [
-        "Other"
+  "name": "setting-toggle",
+  "displayName": "Setting Toggle",
+  "description": "Toggle custom setting using button or command",
+  "icon": "https://raw.githubusercontent.com/Ho-Wan/vscode-setting-toggle/master/images/T-icon.png",
+  "version": "0.0.1",
+  "publisher": "Ho-Wan",
+  "engines": {
+    "vscode": "^1.24.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "keywords": [
+    "settings",
+    "toggle",
+    "button"
+  ],
+  "activationEvents": [
+    "onCommand:extension.toggle"
+  ],
+  "main": "./out/extension",
+  "contributes": {
+    "commands": [
+      {
+        "command": "extension.toggle",
+        "title": "Setting toggle",
+        "icon": {
+          "light": "./images/T-L.png",
+          "dark": "./images/T-D.png"
+        }
+      }
     ],
-    "activationEvents": [
-        "onCommand:extension.sayHello"
-    ],
-    "main": "./out/extension",
-    "contributes": {
-        "commands": [
-            {
-                "command": "extension.sayHello",
-                "title": "Hello World"
-            }
-        ]
+    "menus": {
+      "editor/title": [
+        {
+          "when": "config.setting-toggle.icon.enabled",
+          "command": "extension.toggle",
+          "group": "navigation"
+        }
+      ]
     },
-    "scripts": {
-        "vscode:prepublish": "npm run compile",
-        "compile": "tsc -p ./",
-        "watch": "tsc -watch -p ./",
-        "postinstall": "node ./node_modules/vscode/bin/install",
-        "test": "npm run compile && node ./node_modules/vscode/bin/test"
-    },
-    "devDependencies": {
-        "typescript": "^2.6.1",
-        "vscode": "^1.1.6",
-        "@types/node": "^7.0.43",
-        "@types/mocha": "^2.2.42"
+    "configuration": {
+      "type": "object",
+      "title": "setting-toggle",
+      "properties": {
+        "setting-toggle.setting": {
+          "type": "string",
+          "default": "editor.codeLens",
+          "description": "setting to toggle",
+          "scope": "resource"
+        },
+        "setting-toggle.icon.enabled": {
+          "type": "boolean",
+          "default": true,
+          "description": "Show Setting Toggle icon",
+          "scope": "resource"
+        }
+      }
     }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "postinstall": "node ./node_modules/vscode/bin/install",
+    "test": "npm run compile && node ./node_modules/vscode/bin/test"
+  },
+  "devDependencies": {
+    "typescript": "^2.6.1",
+    "vscode": "^1.1.6",
+    "@types/node": "^7.0.43",
+    "@types/mocha": "^2.2.42"
+  }
 }

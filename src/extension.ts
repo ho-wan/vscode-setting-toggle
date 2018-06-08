@@ -1,29 +1,87 @@
-'use strict';
-// The module 'vscode' contains the VS Code extensibility API
-// Import the module and reference it with the alias vscode in your code below
-import * as vscode from 'vscode';
+"use strict";
 
-// this method is called when your extension is activated
-// your extension is activated the very first time the command is executed
+import * as vscode from "vscode";
+import * as path from "path";
+import * as fs from "fs";
+
+const settingsPath = getSettingsPath();
+
 export function activate(context: vscode.ExtensionContext) {
+  console.log(`Extension "toggle-btn" is now active!`);
 
-    // Use the console to output diagnostic information (console.log) and errors (console.error)
-    // This line of code will only be executed once when your extension is activated
-    console.log('Congratulations, your extension "setting-toggle" is now active!');
+  let disposable = vscode.commands.registerCommand("extension.toggle", () => {
 
-    // The command has been defined in the package.json file
-    // Now provide the implementation of the command with  registerCommand
-    // The commandId parameter must match the command field in package.json
-    let disposable = vscode.commands.registerCommand('extension.sayHello', () => {
-        // The code you place here will be executed every time your command is executed
+    let settingToToggle = vscode.workspace.getConfiguration('',null).get("setting-toggle.setting");
+    fs.readFile(settingsPath, "utf8", function(err, userSettings) {
+      if (err) {
+        vscode.window.showErrorMessage("Error: unable to read settings.");
+      }
 
-        // Display a message box to the user
-        vscode.window.showInformationMessage('Hello World!');
+      let newSettings = toggleSetting(userSettings, settingToToggle.toString());
+      fs.writeFile(settingsPath, newSettings, function(err) {
+        if (err) {
+          vscode.window.showErrorMessage("Error: unable to write settings.");
+        }
+      });
+
     });
 
-    context.subscriptions.push(disposable);
+  });
+
+  context.subscriptions.push(disposable);
 }
 
-// this method is called when your extension is deactivated
-export function deactivate() {
+export function deactivate() {}
+
+function toggleSetting(userSettings: string, settingTitle: string) {
+  try {
+    let state = vscode.workspace.getConfiguration('',null).get(settingTitle);
+    if (typeof(state) !== "boolean") {
+      vscode.window.showErrorMessage(`Error: ${settingTitle} is not a boolean`);
+      return userSettings;
+    }
+    let newState = !state;
+
+    if (userSettings.match(settingTitle)) {
+      let settings = userSettings.replace(`"${settingTitle}": ${state}`, `"${settingTitle}": ${newState}`);
+      vscode.window.setStatusBarMessage(`${settingTitle} is now ${newState}`);
+      return settings;
+    } else {
+      vscode.window.setStatusBarMessage(`${settingTitle} not found`);
+      return userSettings;
+    }
+  }
+  catch (err) {
+    vscode.window.showErrorMessage(err);
+    return userSettings;
+  }
+
+}
+
+// get the PATH of settings.json (check Stable or Insiders build?)
+function getSettingsPath() {
+  let settingsFile;
+  let settingsData;
+  // var settingsData = process.env.HOME + '/Library/Application Support';
+  settingsData =
+    process.env.APPDATA ||
+    (process.platform == "darwin" ? process.env.HOME + "/Library/Application Support" : "/var/local");
+  if (process.execPath.match(/insiders/gi)) {
+    settingsFile = path.join(settingsData, "Code - Insiders/User/settings.json");
+  } else {
+    settingsFile = path.join(settingsData, "Code/User/settings.json");
+  }
+  // console.log("settingsFile =", settingsFile);
+
+  // Workaround for Linux
+  if (process.platform == "linux") {
+    let os = require("os");
+    settingsData = path.join(os.homedir(), ".config/");
+    if (process.execPath.match(/insiders/gi)) {
+      settingsFile = path.join(settingsData, "Code - Insiders/User/settings.json");
+    } else {
+      settingsFile = path.join(settingsData, "Code/User/settings.json");
+    }
+  }
+  return settingsFile;
 }
