@@ -1,4 +1,4 @@
-.DS_Store
-npm-debug.log
 out
 node_modules
+.vscode-test/
+*.vsix
