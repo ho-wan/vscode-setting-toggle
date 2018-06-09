@@ -43,34 +43,49 @@ function toggleSetting(userSettings: string, settingTitle: string) {
     const newSetting: string = `"${settingTitle}": ${newState}`;
     // const correctSettingUsage: string = `"setting-toggle.setting": "${settingTitle}"`;
 
-    // route 1: correct usage - setting toggled
+    // --- REGEX for string matching ---
+    // regex to match { followed by any character not " or /
+    const jsonStart = /^{[^\/"]*/;
+    // regex to match commented setting with variable whitespace, eg. //"editor.codeLens":false,
+    const matchSettingCommented = new RegExp(`\\s(\\/{2})\\s*("${settingTitle}":)\\s*((false)|(true))\\s*(,)\\s`, "g");
+
+    // TODO: find and correct setting format.
+
     if (userSettings.match(settingString)) {
-      // find and toggle setting using string replace
+      // route 1: correct usage and format - setting toggled
+
       const settings = userSettings.replace(settingString, newSetting);
       vscode.window.setStatusBarMessage(`${settingTitle} is now ${newState}`);
       return settings;
-      // route 2: setting key found but incorrect format - return original settings
     } else if (userSettings.match(`"${settingTitle}":`)) {
-      vscode.window.showErrorMessage("Error: please check setting formatting.");
+      // route 2: setting key found but incorrect format - return original settings
+
+      // route 2a: setting boolean found but commented out
+      if (userSettings.match(matchSettingCommented)) {
+        vscode.window.showWarningMessage(`Error: please uncomment "${settingTitle}" in order to toggle.`);
+        return userSettings;
+      }
+      // route 2b: settingTitle found but incorrect format.
+      vscode.window.showWarningMessage(`Error: ${settingTitle} found but formatting incorrect, please correct format.`);
       return userSettings;
-      // route 3: setting key not found - add new setting and return
     } else if (!userSettings.match(`"${settingTitle}":`)) {
-      // regex to match { followed by any character not " or /
-      const jsonStart = /^{[^\/"]*/;
+      // route 3: setting key not found - add new setting and return
+
       const settingStart = userSettings.match(jsonStart);
       if (settingStart) {
-        // concatenate setting to user settings and return
+        // route 3a: concatenate setting to user settings and return
         const settingStartString = settingStart.toString() + newSetting + ", \n    ";
         const settingAdded = userSettings.replace(jsonStart, settingStartString);
         vscode.window.setStatusBarMessage(`${newSetting} now added to settings`);
         return settingAdded;
       } else {
-        // else unable to match start of settings.json, return original settings
-        vscode.window.showErrorMessage(`Error: unable to match settings.json formatting.`);
+        // route 3b: unable to match start of settings.json, return original settings
+        vscode.window.showWarningMessage(`Error: unable to match settings.json formatting.`);
         return userSettings;
       }
     } else {
-      // else unkonwn error, return original settings
+      // route 4: unknown error, return original settings
+
       vscode.window.showErrorMessage(`Error: unknown reason. Please check your settings.`);
       return userSettings;
     }
