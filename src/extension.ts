@@ -38,22 +38,22 @@ function toggleSetting(userSettings: string, settingTitle: string) {
       return userSettings;
     }
 
-    const newState: boolean= !state;
+    const newState: boolean = !state;
     const settingString: string = `"${settingTitle}": ${state}`;
     if (userSettings.match(settingString)) {
+      // find and toggle setting using string replace
       const settings = userSettings.replace(settingString, `"${settingTitle}": ${newState}`);
       vscode.window.setStatusBarMessage(`${settingTitle} is now ${newState}`);
       return settings;
-
     } else if (userSettings.match(settingTitle)) {
+      // if setting title found but not full string, then format is likely incorrect
       vscode.window.showErrorMessage("Unable to toggle setting, please check formatting.");
       return userSettings;
-
     } else {
-      vscode.window.setStatusBarMessage(`${settingTitle} not found`);
+      // if setting does not exist.
+      vscode.window.showErrorMessage(`${settingTitle} not found. Please add "${settingString}" to your settings.`);
       return userSettings;
     }
-
   } catch (err) {
     vscode.window.showErrorMessage("Error: cannot toggle setting. " + err);
     return userSettings;
