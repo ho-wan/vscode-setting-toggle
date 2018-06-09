@@ -41,35 +41,32 @@ function toggleSetting(userSettings: string, settingTitle: string) {
     const newState: boolean = !state;
     const settingString: string = `"${settingTitle}": ${state}`;
     const newSetting: string = `"${settingTitle}": ${newState}`;
-    const correctSettingUsage: string = `"setting-toggle.setting": "${settingTitle}"`;
+    // const correctSettingUsage: string = `"setting-toggle.setting": "${settingTitle}"`;
+
+    // route 1: correct usage - setting toggled
     if (userSettings.match(settingString)) {
       // find and toggle setting using string replace
       const settings = userSettings.replace(settingString, newSetting);
       vscode.window.setStatusBarMessage(`${settingTitle} is now ${newState}`);
       return settings;
-    } else if (userSettings.match(settingTitle + ":") && !userSettings.match(correctSettingUsage)) {
-      // if setting title found but not full string, then format is likely incorrect, return original settings
+      // route 2: setting key found but incorrect format - return original settings
+    } else if (userSettings.match(`"${settingTitle}":`)) {
       vscode.window.showErrorMessage("Error: please check setting formatting.");
       return userSettings;
-    } else if (userSettings.match(correctSettingUsage) || !userSettings.match(`"${settingTitle}":`)) {
-      // only add setting if not already in
-      if (!userSettings.match(`"${settingTitle}":`)) {
-        // regex to match { followed by any character not " or /
-        const jsonStart = /^{[^\/"]*/;
-        const settingStart = userSettings.match(jsonStart);
-        if (settingStart) {
-          // add setting to user settings and return
-          const settingStartString = settingStart.toString() + newSetting + ", \n    ";
-          const settingAdded = userSettings.replace(jsonStart, settingStartString);
-          return settingAdded;
-        } else {
-          // else formatting error, return original settings
-          vscode.window.showErrorMessage(`Error: please add "${settingString}" to your settings.`);
-          return userSettings;
-        }
+      // route 3: setting key not found - add new setting and return
+    } else if (!userSettings.match(`"${settingTitle}":`)) {
+      // regex to match { followed by any character not " or /
+      const jsonStart = /^{[^\/"]*/;
+      const settingStart = userSettings.match(jsonStart);
+      if (settingStart) {
+        // concatenate setting to user settings and return
+        const settingStartString = settingStart.toString() + newSetting + ", \n    ";
+        const settingAdded = userSettings.replace(jsonStart, settingStartString);
+        vscode.window.setStatusBarMessage(`${newSetting} now added to settings`);
+        return settingAdded;
       } else {
-        // setting is already in user settings but not correct format
-        vscode.window.showErrorMessage("Error: incorrect formatting.");
+        // else unable to match start of settings.json, return original settings
+        vscode.window.showErrorMessage(`Error: unable to match settings.json formatting.`);
         return userSettings;
       }
     } else {
