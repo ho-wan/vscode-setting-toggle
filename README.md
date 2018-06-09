@@ -8,7 +8,7 @@ VS Code extension that lets you toggle a custom setting using a button or comman
 ---
 ## Requirements
 
-- To toggle the setting, the setting must be a boolean and be in the user settings already, with the correct formatting. eg.
+- To toggle the setting, the setting must be a boolean with the correct formatting. eg.
 ``` JSON
     "editor.codeLens": false,
 ```
@@ -28,14 +28,14 @@ VS Code extension that lets you toggle a custom setting using a button or comman
 ---
 ## Known Issues
 
-- Changes to user settings must be saved before the setting is toggled using this extension.
-- Extension does not automatically add new settings to user settings.
+- Changes to user settings must be saved before the setting is toggled using this extension, cannot write over a dirty settings.json file.
+
+- Settings.json must have the correct format with the right whitespace.
 
 ---
 ## Release Notes
 
-### 0.0.2
-
-Initial release of Setting Toggle
+## [0.1.0]
+- Specified setting now added to settings.json if not already in user settings.
 
 ---
