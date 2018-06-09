@@ -1,6 +1,6 @@
 # Setting Toggle
 
-VS Code extension that lets you toggle a custom setting using a button or command.
+VS Code extension that lets you toggle a custom setting using a button or command. Default setting toggles codeLens.
 
 ---
 <img src="https://raw.githubusercontent.com/Ho-Wan/vscode-setting-toggle/master/images/setting-toggle-img1.png"/>

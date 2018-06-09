@@ -1,7 +1,7 @@
 {
   "name": "setting-toggle",
   "displayName": "Setting Toggle",
-  "description": "Toggle custom setting using button or command; Defaults to codeLens.",
+  "description": "Toggle custom vs code setting using a button or command.",
   "icon": "images/T-icon.png",
   "version": "0.1.0",
   "publisher": "Ho-Wan",
