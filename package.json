@@ -34,7 +34,7 @@
     "commands": [
       {
         "command": "extension.toggle",
-        "title": "Setting toggle",
+        "title": "Setting Toggle",
         "icon": {
           "light": "./images/T-L.png",
           "dark": "./images/T-D.png"
