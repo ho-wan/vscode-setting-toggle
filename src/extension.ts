@@ -40,33 +40,45 @@ function toggleSetting(userSettings: string, settingTitle: string) {
 
     const newState: boolean = !state;
     const settingString: string = `"${settingTitle}": ${state}`;
-    const newSetting :string = `"${settingTitle}": ${newState}`;
+    const newSetting: string = `"${settingTitle}": ${newState}`;
+    const correctSettingUsage: string = `"setting-toggle.setting": "${settingTitle}"`;
     if (userSettings.match(settingString)) {
       // find and toggle setting using string replace
       const settings = userSettings.replace(settingString, newSetting);
       vscode.window.setStatusBarMessage(`${settingTitle} is now ${newState}`);
       return settings;
-    } else if (userSettings.match(settingTitle+":")) {
+    } else if (userSettings.match(settingTitle + ":") && !userSettings.match(correctSettingUsage)) {
       // if setting title found but not full string, then format is likely incorrect, return original settings
-      vscode.window.showErrorMessage("Unable to toggle setting, please check formatting.");
+      vscode.window.showErrorMessage("Error: please check setting formatting.");
       return userSettings;
-    } else {
-      // regex to match { followed by any character not " or /
-      const jsonStart = /^{[^\/"]*/;
-      const settingStart = userSettings.match(jsonStart);
-      if (settingStart) {
-        // add setting to user settings and return
-        const settingStartString = settingStart.toString() + newSetting + ", \n    ";
-        const settingAdded = userSettings.replace(jsonStart, settingStartString)
-        return settingAdded;
+    } else if (userSettings.match(correctSettingUsage) || !userSettings.match(`"${settingTitle}":`)) {
+      // only add setting if not already in
+      if (!userSettings.match(`"${settingTitle}":`)) {
+        // regex to match { followed by any character not " or /
+        const jsonStart = /^{[^\/"]*/;
+        const settingStart = userSettings.match(jsonStart);
+        if (settingStart) {
+          // add setting to user settings and return
+          const settingStartString = settingStart.toString() + newSetting + ", \n    ";
+          const settingAdded = userSettings.replace(jsonStart, settingStartString);
+          return settingAdded;
+        } else {
+          // else formatting error, return original settings
+          vscode.window.showErrorMessage(`Error: please add "${settingString}" to your settings.`);
+          return userSettings;
+        }
       } else {
-        // else unkonwn error, return original settings
-        vscode.window.showErrorMessage(`Error: please add "${settingString}" to your settings.`);
+        // setting is already in user settings but not correct format
+        vscode.window.showErrorMessage("Error: incorrect formatting.");
         return userSettings;
       }
+    } else {
+      // else unkonwn error, return original settings
+      vscode.window.showErrorMessage(`Error: unknown reason. Please check your settings.`);
+      return userSettings;
     }
   } catch (err) {
-    vscode.window.showErrorMessage("Error: cannot toggle setting. " + err);
+    vscode.window.showErrorMessage("Error caught: " + err);
     return userSettings;
   }
 }
