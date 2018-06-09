@@ -30,68 +30,76 @@ export function activate(context: vscode.ExtensionContext) {
 
 export function deactivate() {}
 
-function toggleSetting(userSettings: string, settingTitle: string) {
+function toggleSetting(rawSettings: string, settingTitle: string) {
+  let userSettings = rawSettings;
   try {
     const state = vscode.workspace.getConfiguration("", null).get(settingTitle);
     if (typeof state !== "boolean") {
-      vscode.window.showErrorMessage(`Error: ${settingTitle} is not a boolean`);
-      return userSettings;
+      vscode.window.showErrorMessage(`Error: ${settingTitle} is not a boolean. Only boolean settings can be toggled.`);
+      return rawSettings;
     }
 
     const newState: boolean = !state;
-    const settingString: string = `"${settingTitle}": ${state}`;
+    const curSetting: string = `"${settingTitle}": ${state}`;
     const newSetting: string = `"${settingTitle}": ${newState}`;
     // const correctSettingUsage: string = `"setting-toggle.setting": "${settingTitle}"`;
 
     // --- REGEX for string matching ---
-    // regex to match { followed by any character not " or /
+    // regex to match setting with variable whitespace, eg. "editor.codeLens":  false
+    const matchSettingVarSpacing = new RegExp(`("${settingTitle}":\\s*((false)|(true)))`);
+    // regex to match commented setting with variable whitespace, eg. // "editor.codeLens":  false ,
+    const matchSettingCommented = new RegExp(`\\s(\\/{2})\\s*("${settingTitle}":)\\s*((false)|(true))\\s*`);
+    // regex to match start of json file { followed by any character until " or /
     const jsonStart = /^{[^\/"]*/;
-    // regex to match commented setting with variable whitespace, eg. //"editor.codeLens":false,
-    const matchSettingCommented = new RegExp(`\\s(\\/{2})\\s*("${settingTitle}":)\\s*((false)|(true))\\s*(,)\\s`, "g");
 
-    // TODO: find and correct setting format.
+    // Find setting and correct format.
+    const settingMatched = userSettings.match(matchSettingVarSpacing);
 
-    if (userSettings.match(settingString)) {
+    if (settingMatched) {
+      userSettings = userSettings.replace(settingMatched[0], curSetting);
+    }
+
+    if (userSettings.match(matchSettingCommented)) {
+      // route 0: setting found but commented out
+
+      vscode.window.showWarningMessage(`Error: please uncomment or delete "${settingTitle}" in order to toggle.`);
+      return rawSettings;
+      // Checks settings and returns toggled setting if possible, otherwise returns existing settings.
+    } else if (userSettings.match(curSetting)) {
       // route 1: correct usage and format - setting toggled
 
-      const settings = userSettings.replace(settingString, newSetting);
+      const toggledSettings = userSettings.replace(curSetting, newSetting);
       vscode.window.setStatusBarMessage(`${settingTitle} is now ${newState}`);
-      return settings;
+      return toggledSettings;
     } else if (userSettings.match(`"${settingTitle}":`)) {
       // route 2: setting key found but incorrect format - return original settings
 
-      // route 2a: setting boolean found but commented out
-      if (userSettings.match(matchSettingCommented)) {
-        vscode.window.showWarningMessage(`Error: please uncomment "${settingTitle}" in order to toggle.`);
-        return userSettings;
-      }
-      // route 2b: settingTitle found but incorrect format.
       vscode.window.showWarningMessage(`Error: ${settingTitle} found but formatting incorrect, please correct format.`);
-      return userSettings;
+      return rawSettings;
     } else if (!userSettings.match(`"${settingTitle}":`)) {
       // route 3: setting key not found - add new setting and return
 
       const settingStart = userSettings.match(jsonStart);
       if (settingStart) {
         // route 3a: concatenate setting to user settings and return
-        const settingStartString = settingStart.toString() + newSetting + ", \n    ";
+        const settingStartString = settingStart[0] + curSetting + ",\n\t";
         const settingAdded = userSettings.replace(jsonStart, settingStartString);
-        vscode.window.setStatusBarMessage(`${newSetting} now added to settings`);
+        vscode.window.setStatusBarMessage(`${curSetting} now added to settings`);
         return settingAdded;
       } else {
         // route 3b: unable to match start of settings.json, return original settings
         vscode.window.showWarningMessage(`Error: unable to match settings.json formatting.`);
-        return userSettings;
+        return rawSettings;
       }
     } else {
       // route 4: unknown error, return original settings
 
       vscode.window.showErrorMessage(`Error: unknown reason. Please check your settings.`);
-      return userSettings;
+      return rawSettings;
     }
   } catch (err) {
     vscode.window.showErrorMessage("Error caught: " + err);
-    return userSettings;
+    return rawSettings;
   }
 }
 
