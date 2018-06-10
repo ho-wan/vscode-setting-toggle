@@ -71,7 +71,7 @@ function toggleSetting(rawSettings: string, settingTitle: string) {
       // route 1: correct usage and format - setting toggled
 
       const toggledSettings = userSettings.replace(curSetting, newSetting);
-      vscode.window.setStatusBarMessage(`${settingTitle} is now ${newState}`);
+      vscode.window.setStatusBarMessage(`${settingTitle} is now ${newState}`, 3000);
       return toggledSettings;
     } else if (userSettings.match(`"${settingTitle}":`)) {
       // route 2: setting key found but incorrect format - return original settings
@@ -86,7 +86,7 @@ function toggleSetting(rawSettings: string, settingTitle: string) {
         // route 3a: concatenate setting to user settings and return
         const settingStartString = settingStart[0] + curSetting + ",\n\t";
         const settingAdded = userSettings.replace(jsonStart, settingStartString);
-        vscode.window.setStatusBarMessage(`${curSetting} now added to settings`);
+        vscode.window.setStatusBarMessage(`${curSetting} now added to settings`, 3000);
         return settingAdded;
       } else {
         // route 3b: unable to match start of settings.json, return original settings
