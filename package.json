@@ -1,7 +1,7 @@
 {
   "name": "setting-toggle",
   "displayName": "Setting Toggle",
-  "description": "Toggle custom vs code setting using a button or command.",
+  "description": "Toggle custom vs-code setting using a button or command.",
   "icon": "images/T-icon.png",
   "version": "1.0.1",
   "publisher": "Ho-Wan",
@@ -46,7 +46,7 @@
         {
           "when": "config.setting-toggle.icon.enabled",
           "command": "extension.toggle",
-          "group": "navigation"
+          "group": "navigation@-1"
         }
       ]
     },

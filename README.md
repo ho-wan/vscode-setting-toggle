@@ -2,9 +2,9 @@
 
 ## Easily toggle any VS code setting at the **click of a button**!
 
-This extension lets you toggle any custom boolean setting using the command or button by editing the settings.json file.
+This extension lets you toggle any custom boolean setting using the command or the button.
 
-Now you can quickly toggle codeLens, minimap, word-wrap, or whatever setting you want without having to remember the key binding ;).
+Now you can quickly toggle codeLens, minimap, word-wrap, or whatever setting you want without having to remember the keybinding ;). Or assign your own keybinding to the "Setting Toggle" command.
 
 ---
 <img src="https://raw.githubusercontent.com/Ho-Wan/vscode-setting-toggle/master/images/setting-toggle-img1.png" alt="setting-toggle-image1"/>
@@ -41,6 +41,6 @@ Status bar shows toggled setting
 ---
 ## Known Issues
 
-- Changes to user settings must be saved before the setting is toggled using this extension, cannot write over a dirty settings.json file.
+- Changes to user settings must be saved before the setting is toggled using this extension; cannot write over a modified but unsaved settings.json file.
 
 ---
