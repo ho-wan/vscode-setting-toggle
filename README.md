@@ -7,7 +7,13 @@ This extension lets you toggle any custom boolean setting using the command or b
 Now you can quickly toggle codeLens, minimap, word-wrap, or whatever setting you want without having to remember the key binding ;).
 
 ---
-<img src="https://raw.githubusercontent.com/Ho-Wan/vscode-setting-toggle/master/images/setting-toggle-img1.png"/>
+<img src="https://raw.githubusercontent.com/Ho-Wan/vscode-setting-toggle/master/images/setting-toggle-img1.png" alt="setting-toggle-image1"/>
+
+
+---
+Status bar shows toggled setting
+
+<img src="https://raw.githubusercontent.com/Ho-Wan/vscode-setting-toggle/v1.0.1/images/setting-toggle-status.gif" alt="setting-toggle-status.gif"/>
 
 ---
 ## Requirements
@@ -22,6 +28,9 @@ Now you can quickly toggle codeLens, minimap, word-wrap, or whatever setting you
     "editor.minimap.enabled": false,
 ```
 - Can only save one setting to toggle at a time. (May add more if there is demand, leave a message in the repository.)
+---
+
+<img src="https://raw.githubusercontent.com/Ho-Wan/vscode-setting-toggle/v1.0.1/images/setting-toggle.gif" alt="setting-toggle-demo.gif">
 
 ---
 ## Settings
@@ -34,11 +43,4 @@ Now you can quickly toggle codeLens, minimap, word-wrap, or whatever setting you
 
 - Changes to user settings must be saved before the setting is toggled using this extension, cannot write over a dirty settings.json file.
 
----
-## Release Notes
-
-## [1.0.0]
-- Now matches incorrect formatting uses regex and applies correct formatting to user settings.
-- Provides warning message if setting is found but commented out.
-- Error messages and routes improved.
 ---

@@ -1,6 +1,9 @@
 # Change Log
 All notable changes to the "setting-toggle" extension will be documented in this file.
 
+## [1.0.1 ] (09 June 2018)
+- Gifs added to readme.
+
 ## [1.0.0] (09 June 2018)
 - Now matches incorrect formatting uses regex and applies correct formatting to user settings.
 - Provides warning message if setting is found but commented out.
