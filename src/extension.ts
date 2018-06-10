@@ -11,6 +11,7 @@ export function activate(context: vscode.ExtensionContext) {
 
   let disposable = vscode.commands.registerCommand("extension.toggle", () => {
     const settingTitle = vscode.workspace.getConfiguration("", null).get("setting-toggle.setting");
+
     fs.readFile(settingsPath, "utf8", function(err, userSettings) {
       if (err) {
         vscode.window.showErrorMessage("Error: unable to read settings. " + err);
@@ -22,7 +23,9 @@ export function activate(context: vscode.ExtensionContext) {
           vscode.window.showErrorMessage("Error: unable to write settings. " + err);
         }
       });
+      // end write
     });
+    // end read
   });
 
   context.subscriptions.push(disposable);
@@ -30,6 +33,7 @@ export function activate(context: vscode.ExtensionContext) {
 
 export function deactivate() {}
 
+// uses regex and string methods to toggle setting (Because settings.json has comments which make it difficult to parse)
 function toggleSetting(rawSettings: string, settingTitle: string) {
   let userSettings = rawSettings;
   try {
@@ -44,7 +48,6 @@ function toggleSetting(rawSettings: string, settingTitle: string) {
     const newSetting: string = `"${settingTitle}": ${newState}`;
     // const correctSettingUsage: string = `"setting-toggle.setting": "${settingTitle}"`;
 
-    // --- REGEX for string matching ---
     // regex to match setting with variable whitespace, eg. "editor.codeLens":  false
     const matchSettingVarSpacing = new RegExp(`("${settingTitle}":\\s*((false)|(true)))`);
     // regex to match commented setting with variable whitespace, eg. // "editor.codeLens":  false ,
@@ -52,9 +55,8 @@ function toggleSetting(rawSettings: string, settingTitle: string) {
     // regex to match start of json file { followed by any character until " or /
     const jsonStart = /^{[^\/"]*/;
 
-    // Find setting and correct format.
+    // Find setting and apply correct formatting.
     const settingMatched = userSettings.match(matchSettingVarSpacing);
-
     if (settingMatched) {
       userSettings = userSettings.replace(settingMatched[0], curSetting);
     }
@@ -103,7 +105,7 @@ function toggleSetting(rawSettings: string, settingTitle: string) {
   }
 }
 
-// get the PATH of settings.json (check Stable or Insiders build?)
+// get the PATH of settings.json (check Stable or Insiders build)
 function getSettingsPath() {
   let settingsFile;
   let settingsData;
@@ -116,8 +118,6 @@ function getSettingsPath() {
   } else {
     settingsFile = path.join(settingsData, "Code/User/settings.json");
   }
-  // console.log("settingsFile =", settingsFile);
-
   // Workaround for Linux
   if (process.platform == "linux") {
     let os = require("os");
