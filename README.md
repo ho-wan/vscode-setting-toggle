@@ -2,13 +2,15 @@
 
 ## Easily toggle any VS code setting at the **click of a button**!
 
-This extension lets you toggle any custom boolean setting using the command or the button.
-
-Now you can quickly toggle codeLens, minimap, word-wrap, or whatever setting you want without having to remember the keybinding ;). Or assign your own keybinding to the "Setting Toggle" command.
+This extension lets you toggle up to 3 custom settings using commands.
+- The primary setting can be toggled using the button.
 
 ---
 <img src="https://raw.githubusercontent.com/Ho-Wan/vscode-setting-toggle/master/images/setting-toggle-img1.png" alt="setting-toggle-image1"/>
 
+- Now you can quickly toggle codeLens, minimap, font ligatures, or whatever setting you want! You can also assign your own keybinding to the **Setting Toggle** commands.
+
+- Separate settings can be saved in individual workspaces.
 
 ---
 Status bar shows toggled setting
@@ -22,12 +24,20 @@ Status bar shows toggled setting
 ``` JSON
     "editor.codeLens": false,
 ```
-- To toggle a custom setting, set **"setting-toggle.setting:"** to the name of the custom setting in the user settings. eg.
+- To toggle a custom setting, set **"toggle.setting.title:"** to the name of the custom setting in the user settings. eg.
 ``` JSON
-    "setting-toggle.setting": "editor.minimap.enabled",
-    "editor.minimap.enabled": false,
+    "toggle.setting.title": "editor.minimap.enabled",
 ```
-- Can only save one setting to toggle at a time. (May add more if there is demand, leave a message in the repository.)
+- To use the Setting 1 and 2, setting1 and setting2 must be enabled and assigned a title. eg.
+``` JSON
+    "toggle.setting1.enabled": true,
+    "toggle.setting1.title": "editor.fontLigatures",
+```
+The commands to toggle the three settings are:
+- **Setting Toggle**
+- **Setting 1 Toggle**
+- **Setting 2 Toggle**
+
 ---
 
 <img src="https://raw.githubusercontent.com/Ho-Wan/vscode-setting-toggle/v1.0.1/images/setting-toggle.gif" alt="setting-toggle-demo.gif">
@@ -35,12 +45,16 @@ Status bar shows toggled setting
 ---
 ## Settings
 
-- `setting-toggle.setting`: The title of the toggled setting. Default is "editor.codeLens".
-- `setting-toggle.icon.enabled`: Show or hide the button icon. Default is on.
+- `"toggle.setting.title"`: Title of the primary setting, can be toggled using the button. Default is "editor.codeLens".
+- `"toggle.setting1.title"`: Title of setting 1 for toggle.
+- `"toggle.setting2.title"`: Title of setting 2 for toggle.
+- `"toggle.setting1.enabled"`: Enables command "Setting 1 Toggle". Default is true.
+- `"toggle.setting2.enabled"`: Enables command "Setting 2 Toggle". Default is true.
+- `"toggle.icon.enabled"`: Show or hide the button icon. Default is true.
 
 ---
 ## Known Issues
 
-- Changes to user settings must be saved before the setting is toggled using this extension; cannot write over a modified but unsaved settings.json file.
+- Changes to the "settings.json" file must be saved before the setting is toggled using this extension.
 
 ---
