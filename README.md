@@ -40,7 +40,7 @@ The commands to toggle the three settings are:
 
 ---
 
-<img src="https://raw.githubusercontent.com/Ho-Wan/vscode-setting-toggle/v1.0.1/images/setting-toggle.gif" alt="setting-toggle-demo.gif">
+<img src="https://raw.githubusercontent.com/Ho-Wan/vscode-setting-toggle/v1.1.0/images/setting-toggle.gif" alt="setting-toggle-demo.gif">
 
 ---
 ## Settings
