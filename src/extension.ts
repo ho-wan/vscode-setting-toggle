@@ -4,33 +4,54 @@ import * as vscode from "vscode";
 import * as path from "path";
 import * as fs from "fs";
 
-const settingsPath = getSettingsPath();
-const toggleTitle = "toggle.setting.title";
+const g_toggleTitle: string = "toggle.setting.title";
+const g_toggleTitle_s1: string = "toggle.setting1.title";
+const g_toggleTitle_s2: string = "toggle.setting2.title";
 
 export function activate(context: vscode.ExtensionContext) {
   console.log(`Extension "toggle-btn" is now active!`);
-
+  // Setting Toggle (primary)
   let disposable = vscode.commands.registerCommand("extension.toggle", () => {
-
-    const settingTitle = vscode.workspace.getConfiguration("", null).get(toggleTitle);
-
-    fs.readFile(settingsPath, "utf8", function (err, userSettings) {
-      if (err) {
-        vscode.window.showErrorMessage("Error: unable to read settings. " + err);
-      }
-
-      const newSettings = toggleSetting(userSettings, settingTitle.toString());
-      fs.writeFile(settingsPath, newSettings, function (err) {
-        if (err) {
-          vscode.window.showErrorMessage("Error: unable to write settings. " + err);
-        }
-      });
-      // end write
-    });
-    // end read
+    updateSettingsFile(g_toggleTitle);
+  });
+  // Setting 1 Toggle
+  let disposable1 = vscode.commands.registerCommand("extension.toggle_s1", () => {
+    updateSettingsFile(g_toggleTitle_s1);
+  });
+  // Setting 2 Toggle
+  let disposable2 = vscode.commands.registerCommand("extension.toggle_s2", () => {
+    updateSettingsFile(g_toggleTitle_s2);
   });
 
   context.subscriptions.push(disposable);
+  context.subscriptions.push(disposable1);
+  context.subscriptions.push(disposable2);
+}
+
+// get current setting state, read and write setting.jsons with updated state.
+function updateSettingsFile(toggleTitle: string) {
+  const m_settingsPath = getSettingsPath();
+  const m_settingTitle = vscode.workspace.getConfiguration("", null).get(toggleTitle);
+  // if settingTitle has not been assigned, then show warning message and break out of function.
+  if (m_settingTitle === "") {
+    vscode.window.showWarningMessage(`Assign name of setting to "${toggleTitle}": to use`);
+    return;
+  }
+
+  // read settings.json
+  fs.readFile(m_settingsPath, "utf8", function (err, userSettings) {
+    if (err) {
+      vscode.window.showErrorMessage("Error: unable to read settings. " + err);
+    }
+
+    const newSettings = toggleSetting(userSettings, m_settingTitle.toString());
+    // write newSettings to settings.json
+    fs.writeFile(m_settingsPath, newSettings, function (err) {
+      if (err) {
+        vscode.window.showErrorMessage("Error: unable to write settings. " + err);
+      }
+    });
+  });
 }
 
 export function deactivate() { }

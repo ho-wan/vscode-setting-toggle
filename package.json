@@ -72,7 +72,7 @@
         "toggle.setting.title": {
           "type": "string",
           "default": "editor.codeLens",
-          "description": "setting to toggle",
+          "description": "name of primary setting for toggle",
           "scope": "resource"
         },
         "toggle.setting1.title": {
