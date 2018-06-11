@@ -2,7 +2,7 @@
 
 ## Easily toggle any VS code setting at the **click of a button**!
 
-This extension lets you toggle up to 3 custom settings using commands.
+This extension lets you toggle up to 3 boolean settings using commands.
 - The primary setting can be toggled using the button.
 
 ---
@@ -10,7 +10,7 @@ This extension lets you toggle up to 3 custom settings using commands.
 
 - Now you can quickly toggle codeLens, minimap, font ligatures, or whatever setting you want! You can also assign your own keybinding to the **Setting Toggle** commands.
 
-- Separate settings can be saved in individual workspaces.
+- Separate settings can be saved in individual workspaces, eg. codeLens for C#.
 
 ---
 Status bar shows toggled setting
@@ -20,7 +20,7 @@ Status bar shows toggled setting
 ---
 ## Requirements
 
-- The toggled setting must be a boolean. codeLens is toggled by default.
+- The toggled setting must be a boolean; codeLens is toggled by default.
 ``` JSON
     "editor.codeLens": false,
 ```
@@ -28,7 +28,7 @@ Status bar shows toggled setting
 ``` JSON
     "toggle.setting.title": "editor.minimap.enabled",
 ```
-- To use the Setting 1 and 2, setting1 and setting2 must be enabled and assigned a title. eg.
+- To use the Setting 1 and 2, "setting1" and "setting2" must be enabled and assigned a title. eg.
 ``` JSON
     "toggle.setting1.enabled": true,
     "toggle.setting1.title": "editor.fontLigatures",
@@ -55,6 +55,6 @@ The commands to toggle the three settings are:
 ---
 ## Known Issues
 
-- Changes to the "settings.json" file must be saved before the setting is toggled using this extension.
+- Changes to the "settings.json" file should be saved before the setting is toggled using this extension, otherwise there will be a merge error when saving.
 
 ---

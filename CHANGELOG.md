@@ -1,6 +1,9 @@
 # Change Log
 All notable changes to the "setting-toggle" extension will be documented in this file.
 
+## [1.1.1 ] (11 June 2018)
+- Minor amendments to readme.
+
 ## [1.1.0 ] (11 June 2018)
 - Now supports up to 3 settings from commands (1 from button).
 - "setting-toggle.setting" changed to "toggle.setting.title".
