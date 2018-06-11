@@ -52,42 +52,54 @@
     ],
     "menus": {
       "commandPalette": [{
-        "when": "config.setting-toggle.setting1.enabled",
+        "when": "config.toggle.setting1.enabled",
         "command": "extension.toggle_s1"
       },
       {
-        "when": "config.setting-toggle.setting2.enabled",
+        "when": "config.toggle.setting2.enabled",
         "command": "extension.toggle_s2"
       }],
       "editor/title": [{
-        "when": "config.setting-toggle.icon.enabled",
+        "when": "config.toggle.icon.enabled",
         "command": "extension.toggle",
         "group": "navigation@-1"
       }]
     },
     "configuration": {
       "type": "object",
-      "title": "setting-toggle",
+      "title": "Setting Toggle",
       "properties": {
-        "setting-toggle.setting": {
+        "toggle.setting.title": {
           "type": "string",
           "default": "editor.codeLens",
           "description": "setting to toggle",
           "scope": "resource"
         },
-        "setting-toggle.setting1.enabled": {
+        "toggle.setting1.title": {
+          "type": "string",
+          "default": "",
+          "description": "name of setting 1 for togggle",
+          "scope": "resource"
+        },
+        "toggle.setting2.title": {
+          "type": "string",
+          "default": "",
+          "description": "name of setting 2 for togggle",
+          "scope": "resource"
+        },
+        "toggle.setting1.enabled": {
           "type": "boolean",
           "default": true,
           "description": "enables setting 1",
           "scope": "resource"
         },
-        "setting-toggle.setting2.enabled": {
+        "toggle.setting2.enabled": {
           "type": "boolean",
           "default": true,
           "description": "enables setting 2",
           "scope": "resource"
         },
-        "setting-toggle.icon.enabled": {
+        "toggle.icon.enabled": {
           "type": "boolean",
           "default": true,
           "description": "Show Setting Toggle icon",

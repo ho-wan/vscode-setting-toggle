@@ -5,20 +5,22 @@ import * as path from "path";
 import * as fs from "fs";
 
 const settingsPath = getSettingsPath();
+const toggleTitle = "toggle.setting.title";
 
 export function activate(context: vscode.ExtensionContext) {
   console.log(`Extension "toggle-btn" is now active!`);
 
   let disposable = vscode.commands.registerCommand("extension.toggle", () => {
-    const settingTitle = vscode.workspace.getConfiguration("", null).get("setting-toggle.setting");
 
-    fs.readFile(settingsPath, "utf8", function(err, userSettings) {
+    const settingTitle = vscode.workspace.getConfiguration("", null).get(toggleTitle);
+
+    fs.readFile(settingsPath, "utf8", function (err, userSettings) {
       if (err) {
         vscode.window.showErrorMessage("Error: unable to read settings. " + err);
       }
 
       const newSettings = toggleSetting(userSettings, settingTitle.toString());
-      fs.writeFile(settingsPath, newSettings, function(err) {
+      fs.writeFile(settingsPath, newSettings, function (err) {
         if (err) {
           vscode.window.showErrorMessage("Error: unable to write settings. " + err);
         }
@@ -31,7 +33,7 @@ export function activate(context: vscode.ExtensionContext) {
   context.subscriptions.push(disposable);
 }
 
-export function deactivate() {}
+export function deactivate() { }
 
 // uses regex and string methods to toggle setting (Because settings.json has comments which make it difficult to parse)
 function toggleSetting(rawSettings: string, settingTitle: string) {
