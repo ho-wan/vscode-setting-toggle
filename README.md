@@ -24,7 +24,7 @@ Status bar shows toggled setting
 ``` JSON
     "editor.codeLens": false,
 ```
-- To toggle a custom setting, set **"toggle.setting.title:"** to the name of the custom setting in the user settings. eg.
+- To toggle a custom setting, set **"toggle.setting.title":** to the name of the custom setting in the user settings. eg.
 ``` JSON
     "toggle.setting.title": "editor.minimap.enabled",
 ```
