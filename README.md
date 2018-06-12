@@ -2,8 +2,9 @@
 
 ## Easily toggle any VS code setting at the **click of a button**!
 
-This extension lets you toggle up to 3 boolean settings using commands.
+This extension lets you toggle up to 3 settings using commands.
 - The primary setting can be toggled using the button.
+- Can toggle between two preset values (string and ints) as well as booleans.
 
 ---
 <img src="https://raw.githubusercontent.com/Ho-Wan/vscode-setting-toggle/master/images/setting-toggle-img1.png" alt="setting-toggle-image1"/>
@@ -20,7 +21,13 @@ Status bar shows toggled setting
 ---
 ## Requirements
 
-- The toggled setting must be a boolean; codeLens is toggled by default.
+
+The commands to toggle the three settings are:
+- **Setting Toggle**
+- **Setting 1 Toggle**
+- **Setting 2 Toggle**
+---
+- The toggle setting gets automatically updated in your settings.json file. codeLens is toggled by default.
 ``` JSON
     "editor.codeLens": false,
 ```
@@ -33,15 +40,19 @@ Status bar shows toggled setting
     "toggle.setting1.enabled": true,
     "toggle.setting1.title": "editor.fontLigatures",
 ```
-The commands to toggle the three settings are:
-- **Setting Toggle**
-- **Setting 1 Toggle**
-- **Setting 2 Toggle**
-
 ---
-
 <img src="https://raw.githubusercontent.com/Ho-Wan/vscode-setting-toggle/master/images/setting-toggle.gif" alt="setting-toggle-demo.gif">
 
+---
+- To toggle a non boolean setting, assign .state1 and .state2 the values you want to toggle between. eg.
+``` JSON
+    "editor.wordWrap": "off",
+    "toggle.setting.title": "editor.wordWrap",
+    "toggle.setting.state1": "off",
+    "toggle.setting.state2": "wordWrapColumn",
+```
+<img src="" alt="setting-toggle-demo-states_ints.gif">
+<img src="" alt="setting-toggle-demo-states_strings.gif">
 ---
 ## Settings
 

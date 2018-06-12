@@ -1,6 +1,10 @@
 # Change Log
 All notable changes to the "setting-toggle" extension will be documented in this file.
 
+## [1.2.0 ] (12 June 2018)
+- Now non-boolean settings can be toggled between preset values.
+- Gifs demonstrating int and string toggling added.
+
 ## [1.1.1 ] (11 June 2018)
 - Minor amendments to readme.
 
