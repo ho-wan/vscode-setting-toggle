@@ -11,7 +11,7 @@ This extension lets you toggle up to 3 settings using commands.
 
 - Now you can quickly toggle codeLens, minimap, font ligatures, or whatever setting you want! You can also assign your own keybinding to the **Setting Toggle** commands.
 
-- Separate settings can be saved in individual workspaces, eg. codeLens for C#.
+- Separate settings can be saved in individual workspaces, eg. codeLens for a C# project.
 
 ---
 Status bar shows toggled setting
@@ -44,15 +44,23 @@ The commands to toggle the three settings are:
 <img src="https://raw.githubusercontent.com/Ho-Wan/vscode-setting-toggle/master/images/setting-toggle.gif" alt="setting-toggle-demo.gif">
 
 ---
-- To toggle a non boolean setting, assign .state1 and .state2 the values you want to toggle between. eg.
+- To toggle a non-boolean setting, assign .state1 and .state2 the values you want to toggle between. eg.
 ``` JSON
     "editor.wordWrap": "off",
     "toggle.setting.title": "editor.wordWrap",
     "toggle.setting.state1": "off",
     "toggle.setting.state2": "wordWrapColumn",
 ```
-<img src="" alt="setting-toggle-demo-states_ints.gif">
-<img src="" alt="setting-toggle-demo-states_strings.gif">
+---
+Toggle font size using ints.
+
+<img src="https://raw.githubusercontent.com/Ho-Wan/vscode-setting-toggle/master/images/setting-toggle-states1.1.2a.gif" alt="setting-toggle-demo-states_ints.gif">
+
+---
+Toggle word wrap using custom strings.
+
+<img src="https://raw.githubusercontent.com/Ho-Wan/vscode-setting-toggle/master/images/setting-toggle-states1.1.2b.gif" alt="setting-toggle-demo-states_strings.gif">
+
 ---
 ## Settings
 
@@ -66,6 +74,6 @@ The commands to toggle the three settings are:
 ---
 ## Known Issues
 
-- Changes to the "settings.json" file should be saved before the setting is toggled using this extension, otherwise there will be a merge error when saving.
+- Save "settings.json" before toggling setting, otherwise there will be a merge error when saving.
 
 ---
