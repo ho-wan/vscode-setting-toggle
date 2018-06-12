@@ -77,12 +77,12 @@
         },
         "toggle.setting.state1": {
           "default": "state1",
-          "description": "string representating state1, eg. 'on'",
+          "description": "string representating state1, eg. \"on\"",
           "scope": "resource"
         },
         "toggle.setting.state2": {
           "default": "state2",
-          "description": "string representing state2, eg. 'off'",
+          "description": "string representing state2, eg. \"off\"",
           "scope": "resource"
         },
         "toggle.setting1.title": {

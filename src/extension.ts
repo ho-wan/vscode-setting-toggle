@@ -3,11 +3,11 @@
 import * as vscode from "vscode";
 import * as path from "path";
 import * as fs from "fs";
-
+// name of settings strings
 const g_toggleTitle: string = "toggle.setting.title";
 const g_toggleTitle_s1: string = "toggle.setting1.title";
 const g_toggleTitle_s2: string = "toggle.setting2.title";
-
+// name of setting states and default values specified in package.json
 const g_setting_state1: string = "toggle.setting.state1";
 const g_setting_state2: string = "toggle.setting.state2";
 const g_state1_default: string = "state1";
