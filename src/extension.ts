@@ -8,6 +8,11 @@ const g_toggleTitle: string = "toggle.setting.title";
 const g_toggleTitle_s1: string = "toggle.setting1.title";
 const g_toggleTitle_s2: string = "toggle.setting2.title";
 
+const g_setting_state1: string = "toggle.setting.state1";
+const g_setting_state2: string = "toggle.setting.state2";
+const g_state1_default: string = "state1";
+const g_state2_default: string = "state2";
+
 export function activate(context: vscode.ExtensionContext) {
   console.log(`Extension "toggle-btn" is now active!`);
   // Setting Toggle (primary)
@@ -59,14 +64,33 @@ export function deactivate() { }
 // uses regex and string methods to toggle setting (Because settings.json has comments which make it difficult to parse)
 function toggleSetting(rawSettings: string, settingTitle: string) {
   let userSettings = rawSettings;
+  let newState;
+
+  const settingState1 = vscode.workspace.getConfiguration("", null).get(g_setting_state1);
+  const settingState2 = vscode.workspace.getConfiguration("", null).get(g_setting_state2);
   try {
-    const state = vscode.workspace.getConfiguration("", null).get(settingTitle);
-    if (typeof state !== "boolean") {
-      vscode.window.showErrorMessage(`Error: ${settingTitle} is not a boolean. Only boolean settings can be toggled.`);
+    let state = vscode.workspace.getConfiguration("", null).get(settingTitle);
+    if (typeof state === "boolean") {
+      newState = !state;
+    } else if (settingState1 === g_state1_default && settingState2 === g_state2_default) {
+      vscode.window.showErrorMessage(`Error: change "state1" and "state2" to toggle values`);
       return rawSettings;
+    } else {
+      // toggle using user assigned states if matches current state
+      if (state === settingState1) {
+        newState = settingState2;
+      } else if (state === settingState2) {
+        newState = settingState1;
+      } else {
+        vscode.window.showErrorMessage(`Error: state does not match state1 or state 2. ${settingTitle} cannot be toggled.`);
+        return rawSettings;
+      }
+      if (typeof newState === "string") {
+        state = `"${state}"`
+        newState = `"${newState}"`
+      }
     }
 
-    const newState: boolean = !state;
     const curSetting: string = `"${settingTitle}": ${state}`;
     const newSetting: string = `"${settingTitle}": ${newState}`;
     // const correctSettingUsage: string = `"setting-toggle.setting": "${settingTitle}"`;
@@ -107,9 +131,9 @@ function toggleSetting(rawSettings: string, settingTitle: string) {
       const settingStart = userSettings.match(jsonStart);
       if (settingStart) {
         // route 3a: concatenate setting to user settings and return
-        const settingStartString = settingStart[0] + curSetting + ",\n\t";
+        const settingStartString = settingStart[0] + newSetting + ",\n\t";
         const settingAdded = userSettings.replace(jsonStart, settingStartString);
-        vscode.window.setStatusBarMessage(`${curSetting} now added to settings`, 3000);
+        vscode.window.setStatusBarMessage(`${newSetting} now added to settings`, 3000);
         return settingAdded;
       } else {
         // route 3b: unable to match start of settings.json, return original settings
