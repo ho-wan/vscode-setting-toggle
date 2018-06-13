@@ -1,9 +1,9 @@
 {
   "name": "setting-toggle",
   "displayName": "Setting Toggle",
-  "description": "Toggle vs-code settings using a button or commands.",
+  "description": "Toggle vs-code settings with a button or using commands.",
   "icon": "images/T-icon.png",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "publisher": "Ho-Wan",
   "author": {
     "name": "Ho-Wan To",
@@ -35,7 +35,7 @@
   "contributes": {
     "commands": [{
         "command": "extension.toggle",
-        "title": "Setting Toggle",
+        "title": "Setting Toggle Primary",
         "icon": {
           "light": "./images/T-L.png",
           "dark": "./images/T-D.png"

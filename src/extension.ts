@@ -180,8 +180,8 @@ export function getSettingsPath() {
       } else {
         settingsFile = settingsFile + "/Code/User/settings.json";
       }
-
       return settingsFile;
+
     }
   }
   catch (err) {
