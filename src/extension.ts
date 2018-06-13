@@ -2,15 +2,16 @@
 
 import * as vscode from "vscode";
 import * as fs from "fs";
+import * as usd from "./UserDataPath";
 // name of settings strings
 const g_toggleTitle: string = "toggle.setting.title";
 const g_toggleTitle_s1: string = "toggle.setting1.title";
 const g_toggleTitle_s2: string = "toggle.setting2.title";
 // name of setting states and default values specified in package.json
-const g_setting_state1: string = "toggle.setting.state1";
-const g_setting_state2: string = "toggle.setting.state2";
-const g_state1_default: string = "state1";
-const g_state2_default: string = "state2";
+const g_settingState1: string = "toggle.setting.state1";
+const g_settingState2: string = "toggle.setting.state2";
+const g_state1Default: string = "state1";
+const g_state2Default: string = "state2";
 
 export function activate(context: vscode.ExtensionContext) {
   console.log(`Extension "toggle-btn" is now active!`);
@@ -34,7 +35,8 @@ export function activate(context: vscode.ExtensionContext) {
 
 // get current setting state, read and write setting.jsons with updated state.
 function updateSettingsFile(toggleTitle: string) {
-  const m_settingsPath = getSettingsPath();
+  const m_usd = new usd.UserDataPath();
+  const m_settingsPath = m_usd.getPathCodeSettings();
   const m_settingTitle = vscode.workspace.getConfiguration("", null).get(toggleTitle);
   // if settingTitle has not been assigned, then show warning message and break out of function.
   if (m_settingTitle === "") {
@@ -65,13 +67,13 @@ export function toggleSetting(rawSettings: string, settingTitle: string) {
   let userSettings = rawSettings;
   let newState;
 
-  const settingState1 = vscode.workspace.getConfiguration("", null).get(g_setting_state1);
-  const settingState2 = vscode.workspace.getConfiguration("", null).get(g_setting_state2);
+  const settingState1 = vscode.workspace.getConfiguration("", null).get(g_settingState1);
+  const settingState2 = vscode.workspace.getConfiguration("", null).get(g_settingState2);
   try {
     let state = vscode.workspace.getConfiguration("", null).get(settingTitle);
     if (typeof state === "boolean") {
       newState = !state;
-    } else if (settingState1 === g_state1_default && settingState2 === g_state2_default) {
+    } else if (settingState1 === g_state1Default && settingState2 === g_state2Default) {
       vscode.window.showErrorMessage(`Error: change "state1" and "state2" to toggle values`);
       return rawSettings;
     } else {
@@ -150,48 +152,3 @@ export function toggleSetting(rawSettings: string, settingTitle: string) {
     return rawSettings;
   }
 }
-
-// get the PATH of settings.json (including check for Insiders build)
-export function getSettingsPath() {
-  try {
-    let settingsFile;
-    if (process.platform === "win32") {
-      // windows
-      settingsFile = process.env.APPDATA;
-      if (process.execPath.match(/insiders/gi)) {
-        settingsFile = settingsFile + "\\Code - Insiders\\User\\settings.json";
-      } else {
-        settingsFile = settingsFile + "\\Code\\User\\settings.json";
-      }
-      return settingsFile;
-
-    } else if (process.platform === "darwin" || process.platform === "linux") {
-      if (process.platform === "darwin") {
-        // Mac
-        settingsFile = process.env.HOME + '/Library/Application Support';
-      } else if (process.platform === "linux") {
-        // Linux
-        settingsFile = process.env.HOME + '/.config';
-      }
-      // Mac or Linux
-      if (process.execPath.match(/insiders/gi)) {
-        settingsFile = settingsFile + "/Code - Insiders/User/settings.json";
-      } else {
-        settingsFile = settingsFile + "/Code/User/settings.json";
-      }
-      return settingsFile;
-
-    }
-  }
-  catch (err) {
-    vscode.window.showErrorMessage("Error caught whilst detecting platform: " + err);
-    return null;
-  }
-  vscode.window.showErrorMessage(`Error: platform could not be detected.`);
-  return null;
-}
-
-// settings.json paths from https://code.visualstudio.com/docs/getstarted/settings
-// Windows %APPDATA%\Code\User\settings.json
-// macOS $HOME/Library/Application Support/Code/User/settings.json
-// Linux $HOME/.config/Code/User/settings.json

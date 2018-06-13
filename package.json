@@ -3,7 +3,7 @@
   "displayName": "Setting Toggle",
   "description": "Toggle vs-code settings with a button or using commands.",
   "icon": "images/T-icon.png",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "publisher": "Ho-Wan",
   "author": {
     "name": "Ho-Wan To",
