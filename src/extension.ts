@@ -165,29 +165,26 @@ export function getSettingsPath() {
         settingsFile = settingsFile + "\\Code\\User\\settings.json";
       }
       return settingsFile;
-    } else if (process.platform == "darwin") {
-      // Mac
-      settingsFile = process.env.HOME + '/Library/Application Support';
+
+    } else if (process.platform == "darwin" || process.platform == "linux") {
+      if (process.platform == "darwin") {
+        // Mac
+        settingsFile = process.env.HOME + '/Library/Application Support';
+      } else if (process.platform == "linux") {
+        // Linux
+        settingsFile = process.env.HOME + '/.config';
+      }
+      // Mac or Linux
       if (process.execPath.match(/insiders/gi)) {
         settingsFile = settingsFile + "/Code - Insiders/User/settings.json";
       } else {
         settingsFile = settingsFile + "/Code/User/settings.json";
       }
-      return settingsFile;
-    }
-    // Linux
-    if (process.platform == "linux") {
-      settingsFile = process.env.HOME + '/.config';
-      if (process.execPath.match(/insiders/gi)) {
-        settingsFile = settingsFile + "/Code - Insiders/User/settings.json";
-      } else {
-        settingsFile = settingsFile + "/Code/User/settings.json";
-      }
+
       return settingsFile;
     }
   }
-  catch (err)
-  {
+  catch (err) {
     vscode.window.showErrorMessage("Error caught whilst detecting platform: " + err);
     return null;
   }
