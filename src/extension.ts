@@ -1,7 +1,6 @@
 "use strict";
 
 import * as vscode from "vscode";
-import * as path from "path";
 import * as fs from "fs";
 // name of settings strings
 const g_toggleTitle: string = "toggle.setting.title";
@@ -156,7 +155,7 @@ export function toggleSetting(rawSettings: string, settingTitle: string) {
 export function getSettingsPath() {
   try {
     let settingsFile;
-    if (process.platform == "win32") {
+    if (process.platform === "win32") {
       // windows
       settingsFile = process.env.APPDATA;
       if (process.execPath.match(/insiders/gi)) {
@@ -166,11 +165,11 @@ export function getSettingsPath() {
       }
       return settingsFile;
 
-    } else if (process.platform == "darwin" || process.platform == "linux") {
-      if (process.platform == "darwin") {
+    } else if (process.platform === "darwin" || process.platform === "linux") {
+      if (process.platform === "darwin") {
         // Mac
         settingsFile = process.env.HOME + '/Library/Application Support';
-      } else if (process.platform == "linux") {
+      } else if (process.platform === "linux") {
         // Linux
         settingsFile = process.env.HOME + '/.config';
       }
@@ -188,7 +187,7 @@ export function getSettingsPath() {
     vscode.window.showErrorMessage("Error caught whilst detecting platform: " + err);
     return null;
   }
-  vscode.window.showErrorMessage(`Error: platform not detected.`);
+  vscode.window.showErrorMessage(`Error: platform could not be detected.`);
   return null;
 }
 

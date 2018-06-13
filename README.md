@@ -75,6 +75,5 @@ Toggle word wrap using custom strings.
 ## Known Issues
 
 - Save "settings.json" before toggling setting, otherwise there will be a merge error when saving.
-- Previous versions (prior to v1.2.0) may not have detected Mac/Linux path to settings.json file correctly. Please let me know in repository if this still does not work.
 
 ---
