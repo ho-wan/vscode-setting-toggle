@@ -62,7 +62,7 @@ function updateSettingsFile(toggleTitle: string) {
 export function deactivate() { }
 
 // uses regex and string methods to toggle setting (Because settings.json has comments which make it difficult to parse)
-function toggleSetting(rawSettings: string, settingTitle: string) {
+export function toggleSetting(rawSettings: string, settingTitle: string) {
   let userSettings = rawSettings;
   let newState;
 
@@ -152,28 +152,50 @@ function toggleSetting(rawSettings: string, settingTitle: string) {
   }
 }
 
-// get the PATH of settings.json (check Stable or Insiders build)
-function getSettingsPath() {
-  let settingsFile;
-  let settingsData;
-  // var settingsData = process.env.HOME + '/Library/Application Support';
-  settingsData =
-    process.env.APPDATA ||
-    (process.platform == "darwin" ? process.env.HOME + "/Library/Application Support" : "/var/local");
-  if (process.execPath.match(/insiders/gi)) {
-    settingsFile = path.join(settingsData, "Code - Insiders/User/settings.json");
-  } else {
-    settingsFile = path.join(settingsData, "Code/User/settings.json");
-  }
-  // Workaround for Linux
-  if (process.platform == "linux") {
-    let os = require("os");
-    settingsData = path.join(os.homedir(), ".config/");
-    if (process.execPath.match(/insiders/gi)) {
-      settingsFile = path.join(settingsData, "Code - Insiders/User/settings.json");
-    } else {
-      settingsFile = path.join(settingsData, "Code/User/settings.json");
+// get the PATH of settings.json (including check for Insiders build)
+export function getSettingsPath() {
+  try {
+    let settingsFile;
+    if (process.platform == "win32") {
+      // windows
+      settingsFile = process.env.APPDATA;
+      if (process.execPath.match(/insiders/gi)) {
+        settingsFile = settingsFile + "\\Code - Insiders\\User\\settings.json";
+      } else {
+        settingsFile = settingsFile + "\\Code\\User\\settings.json";
+      }
+      return settingsFile;
+    } else if (process.platform == "darwin") {
+      // Mac
+      settingsFile = process.env.HOME + '/Library/Application Support';
+      if (process.execPath.match(/insiders/gi)) {
+        settingsFile = settingsFile + "/Code - Insiders/User/settings.json";
+      } else {
+        settingsFile = settingsFile + "/Code/User/settings.json";
+      }
+      return settingsFile;
+    }
+    // Linux
+    if (process.platform == "linux") {
+      settingsFile = process.env.HOME + '/.config';
+      if (process.execPath.match(/insiders/gi)) {
+        settingsFile = settingsFile + "/Code - Insiders/User/settings.json";
+      } else {
+        settingsFile = settingsFile + "/Code/User/settings.json";
+      }
+      return settingsFile;
     }
   }
-  return settingsFile;
+  catch (err)
+  {
+    vscode.window.showErrorMessage("Error caught whilst detecting platform: " + err);
+    return null;
+  }
+  vscode.window.showErrorMessage(`Error: platform not detected.`);
+  return null;
 }
+
+// settings.json paths from https://code.visualstudio.com/docs/getstarted/settings
+// Windows %APPDATA%\Code\User\settings.json
+// macOS $HOME/Library/Application Support/Code/User/settings.json
+// Linux $HOME/.config/Code/User/settings.json
