@@ -4,12 +4,12 @@ import * as vscode from "vscode";
 import * as fs from "fs";
 import * as usd from "./UserDataPath";
 // name of settings strings
-const g_toggleTitle: string = "toggle.setting.title";
-const g_toggleTitle_s1: string = "toggle.setting1.title";
-const g_toggleTitle_s2: string = "toggle.setting2.title";
+const g_toggleTitle: string = "toggle.settingTitle";
+const g_toggleTitle_s1: string = "toggle.setting1Title";
+const g_toggleTitle_s2: string = "toggle.setting2Title";
 // name of setting states and default values specified in package.json
-const g_settingState1: string = "toggle.setting.state1";
-const g_settingState2: string = "toggle.setting.state2";
+const g_settingState1: string = "toggle.settingState1";
+const g_settingState2: string = "toggle.settingState2";
 const g_state1Default: string = "state1";
 const g_state2Default: string = "state2";
 

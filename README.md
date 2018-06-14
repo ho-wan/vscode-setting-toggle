@@ -31,14 +31,14 @@ The commands to toggle the three settings are:
 ``` JSON
     "editor.codeLens": false,
 ```
-- To toggle a custom setting, set **"toggle.setting.title":** to the name of the custom setting in the user settings. eg.
+- To toggle a custom setting, set **"toggle.settingTitle":** to the name of the custom setting in the user settings. eg.
 ``` JSON
-    "toggle.setting.title": "editor.minimap.enabled",
+    "toggle.settingTitle": "editor.minimap.enabled",
 ```
 - To use the Setting 1 and 2, "setting1" and "setting2" must be enabled and assigned a title. eg.
 ``` JSON
-    "toggle.setting1.enabled": true,
-    "toggle.setting1.title": "editor.fontLigatures",
+    "toggle.setting1Enabled": true,
+    "toggle.setting1Title": "editor.fontLigatures",
 ```
 ---
 <img src="https://raw.githubusercontent.com/Ho-Wan/vscode-setting-toggle/master/images/setting-toggle.gif" alt="setting-toggle-demo.gif">
@@ -47,9 +47,9 @@ The commands to toggle the three settings are:
 - To toggle a non-boolean setting, assign .state1 and .state2 the values you want to toggle between. eg.
 ``` JSON
     "editor.wordWrap": "off",
-    "toggle.setting.title": "editor.wordWrap",
-    "toggle.setting.state1": "off",
-    "toggle.setting.state2": "wordWrapColumn",
+    "toggle.settingTitle": "editor.wordWrap",
+    "toggle.settingState1": "off",
+    "toggle.settingState2": "wordWrapColumn",
 ```
 ---
 Toggle font size using ints.
@@ -61,15 +61,17 @@ Toggle word wrap using custom strings.
 
 <img src="https://raw.githubusercontent.com/Ho-Wan/vscode-setting-toggle/master/images/setting-toggle-states1.1.2b.gif" alt="setting-toggle-demo-states_strings.gif">
 
+_Please note that settings have been renamed as of v1.2.3; toggle.setting.title -> toggle.settingTitle, etc._
+
 ---
 ## Settings
 
-- `"toggle.setting.title"`: Title of the primary setting, can be toggled using the button. Default is "editor.codeLens".
-- `"toggle.setting1.title"`: Title of setting 1 for toggle.
-- `"toggle.setting2.title"`: Title of setting 2 for toggle.
-- `"toggle.setting1.enabled"`: Enables command "Setting 1 Toggle". Default is true.
-- `"toggle.setting2.enabled"`: Enables command "Setting 2 Toggle". Default is true.
-- `"toggle.icon.enabled"`: Show or hide the button icon. Default is true.
+- `"toggle.settingTitle"`: Title of the primary setting, can be toggled using the button. Default is "editor.codeLens".
+- `"toggle.setting1Title"`: Title of setting 1 for toggle.
+- `"toggle.setting2Title"`: Title of setting 2 for toggle.
+- `"toggle.setting1Enabled"`: Enables command "Setting 1 Toggle". Default is true.
+- `"toggle.setting2Enabled"`: Enables command "Setting 2 Toggle". Default is true.
+- `"toggle.iconEnabled"`: Show or hide the button icon. Default is true.
 
 ---
 ## Known Issues

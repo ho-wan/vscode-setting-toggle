@@ -3,7 +3,7 @@
   "displayName": "Setting Toggle",
   "description": "Toggle vs-code settings with a button or using commands.",
   "icon": "images/T-icon.png",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "publisher": "Ho-Wan",
   "author": {
     "name": "Ho-Wan To",
@@ -52,15 +52,15 @@
     ],
     "menus": {
       "commandPalette": [{
-        "when": "config.toggle.setting1.enabled",
+        "when": "config.toggle.setting1Enabled",
         "command": "extension.toggle_s1"
       },
       {
-        "when": "config.toggle.setting2.enabled",
+        "when": "config.toggle.setting2Enabled",
         "command": "extension.toggle_s2"
       }],
       "editor/title": [{
-        "when": "config.toggle.icon.enabled",
+        "when": "config.toggle.iconEnabled",
         "command": "extension.toggle",
         "group": "navigation@-1"
       }]
@@ -69,47 +69,47 @@
       "type": "object",
       "title": "Setting Toggle",
       "properties": {
-        "toggle.setting.title": {
+        "toggle.settingTitle": {
           "type": "string",
           "default": "editor.codeLens",
           "description": "name of primary setting for toggle",
           "scope": "resource"
         },
-        "toggle.setting.state1": {
+        "toggle.settingState1": {
           "default": "state1",
           "description": "string representating state1, eg. \"on\"",
           "scope": "resource"
         },
-        "toggle.setting.state2": {
+        "toggle.settingState2": {
           "default": "state2",
           "description": "string representing state2, eg. \"off\"",
           "scope": "resource"
         },
-        "toggle.setting1.title": {
+        "toggle.setting1Title": {
           "type": "string",
           "default": "",
           "description": "name of setting 1 for togggle",
           "scope": "resource"
         },
-        "toggle.setting2.title": {
+        "toggle.setting2Title": {
           "type": "string",
           "default": "",
           "description": "name of setting 2 for togggle",
           "scope": "resource"
         },
-        "toggle.setting1.enabled": {
+        "toggle.setting1Enabled": {
           "type": "boolean",
           "default": true,
           "description": "enables setting 1",
           "scope": "resource"
         },
-        "toggle.setting2.enabled": {
+        "toggle.setting2Enabled": {
           "type": "boolean",
           "default": true,
           "description": "enables setting 2",
           "scope": "resource"
         },
-        "toggle.icon.enabled": {
+        "toggle.iconEnabled": {
           "type": "boolean",
           "default": true,
           "description": "Show Setting Toggle icon",
