@@ -1,6 +1,9 @@
 # Change Log
 All notable changes to the "setting-toggle" extension will be documented in this file.
 
+## [1.2.4] (20 June 2018)
+- settings renamed; setting1Enabled and setting2Enabled removed, and readme updated.
+
 ## [1.2.3] (14 June 2018)
 - settings renamed; toggle.setting.title -> toggle.settingTitle, etc.
 

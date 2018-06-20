@@ -3,7 +3,7 @@
   "displayName": "Setting Toggle",
   "description": "Toggle vs-code settings with a button or using commands.",
   "icon": "images/T-icon.png",
-  "version": "1.2.3",
+  "version": "1.2.4",
   "publisher": "Ho-Wan",
   "author": {
     "name": "Ho-Wan To",
@@ -52,16 +52,6 @@
       }
     ],
     "menus": {
-      "commandPalette": [
-        {
-          "when": "config.toggle.setting1Enabled",
-          "command": "extension.toggle_s1"
-        },
-        {
-          "when": "config.toggle.setting2Enabled",
-          "command": "extension.toggle_s2"
-        }
-      ],
       "editor/title": [
         {
           "when": "config.toggle.iconEnabled",
@@ -100,18 +90,6 @@
           "type": "string",
           "default": "",
           "description": "name of setting 2 for togggle",
-          "scope": "resource"
-        },
-        "toggle.setting1Enabled": {
-          "type": "boolean",
-          "default": true,
-          "description": "enables setting 1",
-          "scope": "resource"
-        },
-        "toggle.setting2Enabled": {
-          "type": "boolean",
-          "default": true,
-          "description": "enables setting 2",
           "scope": "resource"
         },
         "toggle.iconEnabled": {

@@ -9,9 +9,7 @@ This extension lets you toggle up to 3 settings using commands.
 ---
 <img src="https://raw.githubusercontent.com/Ho-Wan/vscode-setting-toggle/master/images/setting-toggle-img1.png" alt="setting-toggle-image1"/>
 
-- Now you can quickly toggle codeLens, minimap, font ligatures, or whatever setting you want! You can also assign your own keybinding to the **Setting Toggle** commands.
-
-- Separate settings can be saved in individual workspaces, eg. codeLens for a C# project.
+- Now you can quickly toggle codeLens or whatever setting you want! You can also assign your own keybinding to the **Setting Toggle** commands using the vscode keybindings.
 
 ---
 Status bar shows toggled setting
@@ -28,23 +26,21 @@ The commands to toggle the three settings are:
 - **Setting 2 Toggle**
 ---
 - The toggle setting gets automatically updated in your settings.json file. codeLens is toggled by default.
+- To toggle a custom setting, set **"toggle.settingTitle":** to the name of the custom setting in the user settings.
+eg. to toggle the activityBar on the left of the editor:
 ``` JSON
-    "editor.codeLens": false,
+    "toggle.settingTitle": "workbench.activityBar.visible",
 ```
-- To toggle a custom setting, set **"toggle.settingTitle":** to the name of the custom setting in the user settings. eg.
+- To use the Setting 1 and 2, assign the setting name to setting1Title and setting2Title.
 ``` JSON
-    "toggle.settingTitle": "editor.minimap.enabled",
-```
-- To use the Setting 1 and 2, "setting1" and "setting2" must be enabled and assigned a title. eg.
-``` JSON
-    "toggle.setting1Enabled": true,
-    "toggle.setting1Title": "editor.fontLigatures",
+    "toggle.setting1Title": "editor.codeLens",
+    "toggle.setting2Title": "editor.parameterHints",
 ```
 ---
 <img src="https://raw.githubusercontent.com/Ho-Wan/vscode-setting-toggle/master/images/setting-toggle.gif" alt="setting-toggle-demo.gif">
 
 ---
-- To toggle a non-boolean setting, assign .state1 and .state2 the values you want to toggle between. eg.
+- To toggle a non-boolean setting, assign State1 and State2 the values you want to toggle between. The setting is only toggled if the current value matches either State1 or State2.
 ``` JSON
     "editor.wordWrap": "off",
     "toggle.settingTitle": "editor.wordWrap",
