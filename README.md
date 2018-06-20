@@ -69,8 +69,8 @@ _Please note that settings have been renamed as of v1.2.3; toggle.setting.title 
 - `"toggle.settingTitle"`: Title of the primary setting, can be toggled using the button. Default is "editor.codeLens".
 - `"toggle.setting1Title"`: Title of setting 1 for toggle.
 - `"toggle.setting2Title"`: Title of setting 2 for toggle.
-- `"toggle.setting1Enabled"`: Enables command "Setting 1 Toggle". Default is true.
-- `"toggle.setting2Enabled"`: Enables command "Setting 2 Toggle". Default is true.
+- `"toggle.settingState1"`: Custom value of state 1 for toggle, eg. "on".
+- `"toggle.settingState2"`: Custom value of state 2 for toggle, eg. "off".
 - `"toggle.iconEnabled"`: Show or hide the button icon. Default is true.
 
 ---
