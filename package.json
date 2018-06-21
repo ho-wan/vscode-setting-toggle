@@ -1,9 +1,9 @@
 {
   "name": "setting-toggle",
   "displayName": "Setting Toggle",
-  "description": "Toggle vs-code settings with a button or using commands.",
+  "description": "Easily toggle any vs-code setting between two states.",
   "icon": "images/T-icon.png",
-  "version": "1.2.4",
+  "version": "1.2.5",
   "publisher": "Ho-Wan",
   "author": {
     "name": "Ho-Wan To",
@@ -15,7 +15,7 @@
   },
   "bugs": "https://github.com/Ho-Wan/vscode-setting-toggle/issues",
   "engines": {
-    "vscode": "^1.24.0"
+    "vscode": "^1.23.0"
   },
   "categories": [
     "Other"
@@ -67,29 +67,29 @@
         "toggle.settingTitle": {
           "type": "string",
           "default": "editor.codeLens",
-          "description": "name of primary setting for toggle",
+          "description": "Name of primary setting to toggle",
           "scope": "resource"
         },
         "toggle.settingState1": {
           "default": "state1",
-          "description": "string representating state1, eg. \"on\"",
+          "description": "String or value representing state1, eg. \"on\"",
           "scope": "resource"
         },
         "toggle.settingState2": {
           "default": "state2",
-          "description": "string representing state2, eg. \"off\"",
+          "description": "String or value representing state2, eg. \"off\"",
           "scope": "resource"
         },
         "toggle.setting1Title": {
           "type": "string",
           "default": "",
-          "description": "name of setting 1 for togggle",
+          "description": "Name of setting 1 to toggle",
           "scope": "resource"
         },
         "toggle.setting2Title": {
           "type": "string",
           "default": "",
-          "description": "name of setting 2 for togggle",
+          "description": "Name of setting 2 to toggle",
           "scope": "resource"
         },
         "toggle.iconEnabled": {
