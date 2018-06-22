@@ -71,13 +71,17 @@ export function toggleSetting(rawSettings: string, settingTitle: string) {
   const settingState2 = vscode.workspace.getConfiguration("", null).get(g_settingState2);
   try {
     let state = vscode.workspace.getConfiguration("", null).get(settingTitle);
-    if (typeof state === "boolean") {
+    if (!(typeof state === "boolean" || typeof state === "string" || typeof state === "number")) {
+      // console.log(`typeof state = ${state}`);
+      vscode.window.showErrorMessage(`Error: ${settingTitle} is not a valid setting. Setting must be a boolean, string or number.`);
+      return rawSettings;
+    } else if (typeof state === "boolean") {
       newState = !state;
-    } else if (settingState1 === g_state1Default && settingState2 === g_state2Default) {
-      vscode.window.showErrorMessage(`Error: change "state1" and "state2" to toggle values`);
+    } else if (settingState1 === g_state1Default || settingState2 === g_state2Default) {
+      vscode.window.showErrorMessage(`Error: change "settingState1" and "settingState2" to required values`);
       return rawSettings;
     } else {
-      // toggle using user assigned states if matches current state
+      // toggle using user assigned states if matches current state (string or number)
       if (state === settingState1) {
         newState = settingState2;
       } else if (state === settingState2) {
@@ -86,6 +90,7 @@ export function toggleSetting(rawSettings: string, settingTitle: string) {
         vscode.window.showErrorMessage(`Error: state does not match state1 or state 2. ${settingTitle} cannot be toggled.`);
         return rawSettings;
       }
+      // Add quote symbols to string to pass to json format
       if (typeof newState === "string") {
         state = `"${state}"`
         newState = `"${newState}"`

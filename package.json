@@ -3,7 +3,7 @@
   "displayName": "Setting Toggle",
   "description": "Easily toggle any vs-code setting between two states.",
   "icon": "images/T-icon.png",
-  "version": "1.2.5",
+  "version": "1.2.6",
   "publisher": "Ho-Wan",
   "author": {
     "name": "Ho-Wan To",
