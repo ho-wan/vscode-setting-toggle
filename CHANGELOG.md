@@ -1,6 +1,9 @@
 # Change Log
 All notable changes to the "setting-toggle" extension will be documented in this file.
 
+## [1.2.7] (09 Nov 2018)
+- Minor update to readme.
+
 ## [1.2.6] (22 June 2018)
 - Error checking added for invalid setting.
 

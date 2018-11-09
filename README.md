@@ -73,5 +73,6 @@ _Please note that settings have been renamed as of v1.2.3; toggle.setting.title 
 ## Known Issues
 
 - Save "settings.json" before toggling setting, otherwise there will be a merge error when saving.
+- Does not check for block comments in "settings.json".
 
 ---
