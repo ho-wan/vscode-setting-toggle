@@ -57,8 +57,6 @@ Toggle word wrap using custom strings.
 
 <img src="https://raw.githubusercontent.com/Ho-Wan/vscode-setting-toggle/master/images/setting-toggle-states1.1.2b.gif" alt="setting-toggle-demo-states_strings.gif">
 
-_Please note that settings have been renamed as of v1.2.3; toggle.setting.title -> toggle.settingTitle, etc._
-
 ---
 ## Settings
 
@@ -72,7 +70,6 @@ _Please note that settings have been renamed as of v1.2.3; toggle.setting.title 
 ---
 ## Known Issues
 
-- Save "settings.json" before toggling setting, otherwise there will be a merge error when saving.
-- Does not check for block comments in "settings.json".
+- If "settings.json" is open with unsaved changes, the setting will not be toggled.
 
 ---
