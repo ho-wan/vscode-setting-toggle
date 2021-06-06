@@ -1,6 +1,9 @@
 # Change Log
 All notable changes to the "setting-toggle" extension will be documented in this file.
 
+## [1.4.1] (06 June 2021)
+- Update setting toggle to use vscode api to update state instead of string matching used in v1.3.1 and prior. This should now work when using VSCode in WSL (previously the settings file would not be found).
+
 ## [1.3.1] (09 Nov 2018)
 - Minor update to readme.
 
