@@ -1,74 +1,68 @@
 "use strict";
 
 import * as vscode from "vscode";
-// name of settings strings
-const g_togglePrimary: string = "toggle.settingTitle";
-const g_toggleTitle_s1: string = "toggle.setting1Title";
-const g_toggleTitle_s2: string = "toggle.setting2Title";
+
 // name of setting states and default values specified in package.json
-const g_settingState1: string = "toggle.settingState1";
-const g_settingState2: string = "toggle.settingState2";
-const g_state1Default: string = "state1";
-const g_state2Default: string = "state2";
-// name of commands
-const g_commandToggleP = "extension.toggle";
-const g_commandToggleS1 = "extension.toggle_s1";
-const g_commandToggleS2 = "extension.toggle_s2";
-// status bar items
-let g_statusBarTogP: vscode.StatusBarItem;
-let g_statusBarTogS1: vscode.StatusBarItem;
-let g_statusBarTogS2: vscode.StatusBarItem;
+const SettingState1: string = "toggle.settingState1";
+const SettingState2: string = "toggle.settingState2";
+const State1Default: string = "state1";
+const State2Default: string = "state2";
+
+type ToggleSetting = {
+  title: string;
+  command: string;
+  statusBar: {
+    item?: vscode.StatusBarItem;
+    text: string;
+    position: number;
+  };
+};
+
+let Setting: { [key: string]: ToggleSetting } = {
+  primary: {
+    title: "toggle.settingTitle",
+    command: "extension.toggle",
+    statusBar: {
+      text: "T-P",
+      position: 3,
+    },
+  },
+  s1: {
+    title: "toggle.setting1Title",
+    command: "extension.toggle_s1",
+    statusBar: {
+      text: "T-S1",
+      position: 2,
+    },
+  },
+  s2: {
+    title: "toggle.setting2Title",
+    command: "extension.toggle_s2",
+    statusBar: {
+      text: "T-S2",
+      position: 1,
+    },
+  },
+};
 
 export function activate(context: vscode.ExtensionContext) {
-  console.log(`Extension "toggle-btn" is now active! again!`);
-  // Setting Toggle (primary)
-  const disposable = vscode.commands.registerCommand(g_commandToggleP, () => {
-    toggleSetting(g_togglePrimary);
-  });
+  console.log(`Extension "toggle-btn" is now active!`);
 
-  g_statusBarTogP = vscode.window.createStatusBarItem(
-    vscode.StatusBarAlignment.Left,
-    3
-  );
-  g_statusBarTogP.text = "T-P";
-  g_statusBarTogP.command = g_commandToggleP;
-  context.subscriptions.push(g_statusBarTogP);
-
-  // Setting 1 Toggle
-  const disposable1 = vscode.commands.registerCommand(g_commandToggleS1, () => {
-    toggleSetting(g_toggleTitle_s1);
-  });
-  g_statusBarTogS1 = vscode.window.createStatusBarItem(
-    vscode.StatusBarAlignment.Left,
-    2
-  );
-  g_statusBarTogS1.text = "T-S1";
-  g_statusBarTogS1.command = g_commandToggleS1;
-  context.subscriptions.push(g_statusBarTogS1);
-
-  // Setting 2 Toggle
-  const disposable2 = vscode.commands.registerCommand(g_commandToggleS2, () => {
-    toggleSetting(g_toggleTitle_s2);
-  });
-  g_statusBarTogS2 = vscode.window.createStatusBarItem(
-    vscode.StatusBarAlignment.Left,
-    1
-  );
-  g_statusBarTogS2.text = "T-S2";
-  g_statusBarTogS2.command = g_commandToggleS2;
-  context.subscriptions.push(g_statusBarTogS2);
-
-  context.subscriptions.push(disposable);
-  context.subscriptions.push(disposable1);
-  context.subscriptions.push(disposable2);
-
-  showStatusBarItem();
-}
-
-function showStatusBarItem(): void {
-  g_statusBarTogP.show();
-  g_statusBarTogS1.show();
-  g_statusBarTogS2.show();
+  for (const [, setting] of Object.entries(Setting)) {
+    setting.statusBar.item = vscode.window.createStatusBarItem(
+      vscode.StatusBarAlignment.Left,
+      setting.statusBar.position
+    );
+    setting.statusBar.item.text = setting.statusBar.text;
+    setting.statusBar.item.command = setting.command;
+    context.subscriptions.push(
+      setting.statusBar.item,
+      vscode.commands.registerCommand(setting.command, () => {
+        toggleSetting(setting.title);
+      })
+    );
+    setting.statusBar.item.show();
+  }
 }
 
 export function deactivate() {}
@@ -119,10 +113,10 @@ async function toggleCustom(
   settingTitle: string,
   oldState: number | string
 ) {
-  const settingState1: number | string = config.get(g_settingState1);
-  const settingState2: number | string = config.get(g_settingState2);
+  const settingState1: number | string = config.get(SettingState1);
+  const settingState2: number | string = config.get(SettingState2);
 
-  if (settingState1 === g_state1Default || settingState2 === g_state2Default) {
+  if (settingState1 === State1Default || settingState2 === State2Default) {
     vscode.window.showErrorMessage(
       `Setting Toggle: Set "settingState1" and "settingState2" to toggle non-boolean values.`
     );
