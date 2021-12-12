@@ -27,16 +27,14 @@
     "codeLens"
   ],
   "activationEvents": [
-    "onCommand:extension.toggle",
-    "onCommand:extension.toggle_s1",
-    "onCommand:extension.toggle_s2"
+    "*"
   ],
   "main": "./out/extension",
   "contributes": {
     "commands": [
       {
         "command": "extension.toggle",
-        "title": "Setting Toggle Primary",
+        "title": "Toggle Setting Primary",
         "icon": {
           "light": "./images/T-L.png",
           "dark": "./images/T-D.png"
@@ -44,11 +42,11 @@
       },
       {
         "command": "extension.toggle_s1",
-        "title": "Setting 1 Toggle"
+        "title": "Toggle Setting 1"
       },
       {
         "command": "extension.toggle_s2",
-        "title": "Setting 2 Toggle"
+        "title": "Toggle Setting 2"
       }
     ],
     "menus": {
