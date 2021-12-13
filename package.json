@@ -27,7 +27,7 @@
     "codeLens"
   ],
   "activationEvents": [
-    "*"
+    "onStartupFinished"
   ],
   "main": "./out/extension",
   "contributes": {
