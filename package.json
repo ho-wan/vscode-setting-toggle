@@ -15,7 +15,7 @@
   },
   "bugs": "https://github.com/ho-wan/vscode-setting-toggle/issues",
   "engines": {
-    "vscode": "^1.23.0"
+    "vscode": "^1.58.0"
   },
   "categories": [
     "Other"
@@ -82,7 +82,7 @@
         },
         "toggle.showStatusbarPrimary": {
           "type": "boolean",
-          "default": false,
+          "default": true,
           "description": "Show button in status bar for Primary Setting.",
           "scope": "resource"
         },
