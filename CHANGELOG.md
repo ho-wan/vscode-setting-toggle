@@ -1,6 +1,9 @@
 # Change Log
 All notable changes to the "setting-toggle" extension will be documented in this file.
 
+## [1.5.0] (13 December 2021)
+- Add all 3 toggle settings to status bar, which can be clicked to toggle each one. By default, only the primary is shown, `settings.json` can be used to configure if each toggle is shown in status bar or not. State of boolean toggles will be shown as (T) or (F).
+
 ## [1.4.1] (06 June 2021)
 - Update setting toggle to use vscode api to update state instead of string matching used in v1.3.1 and prior. This should now work when using VSCode in WSL (previously the settings file would not be found).
 
