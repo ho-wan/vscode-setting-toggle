@@ -13,8 +13,10 @@ type ToggleSetting = {
   command: string;
   statusBar: {
     item?: vscode.StatusBarItem;
-    text: string;
+    config: string;
     position: number;
+    text: string;
+    tooltip: string;
   };
 };
 
@@ -23,24 +25,30 @@ let Setting: { [key: string]: ToggleSetting } = {
     title: "toggle.settingTitle",
     command: "extension.toggle",
     statusBar: {
-      text: "T-P",
+      config: "toggle.showStatusbarPrimary",
       position: 3,
+      text: "P",
+      tooltip: "Setting Toggle - Primary Setting",
     },
   },
   s1: {
     title: "toggle.setting1Title",
     command: "extension.toggle_s1",
     statusBar: {
-      text: "T-S1",
+      config: "toggle.showStatusbarS1",
       position: 2,
+      text: "S1",
+      tooltip: "Setting Toggle - S1 Setting",
     },
   },
   s2: {
     title: "toggle.setting2Title",
     command: "extension.toggle_s2",
     statusBar: {
-      text: "T-S2",
+      config: "toggle.showStatusbarS2",
       position: 1,
+      text: "S2",
+      tooltip: "Setting Toggle - S2 Setting",
     },
   },
 };
@@ -54,6 +62,7 @@ export function activate(context: vscode.ExtensionContext) {
       setting.statusBar.position
     );
     setting.statusBar.item.text = setting.statusBar.text;
+    setting.statusBar.item.tooltip = setting.statusBar.tooltip;
     setting.statusBar.item.command = setting.command;
     context.subscriptions.push(
       setting.statusBar.item,
@@ -61,7 +70,35 @@ export function activate(context: vscode.ExtensionContext) {
         toggleSetting(setting.title);
       })
     );
-    setting.statusBar.item.show();
+  }
+
+  context.subscriptions.push(
+    vscode.workspace.onDidChangeConfiguration(showInStatusBar)
+  );
+
+  showInStatusBar();
+}
+
+function showInStatusBar() {
+  const config = vscode.workspace.getConfiguration();
+
+  for (const [, setting] of Object.entries(Setting)) {
+    const settingTitle: string = config.get(setting.title);
+    // shows in status bar if config is enabled and setting has been found
+    if (config.get(setting.statusBar.config) && settingTitle) {
+      // show (T) or (F) in status bar for boolean status
+      let state = config.get(settingTitle);
+      if (state != undefined && typeof state === "boolean") {
+        if (state) {
+          setting.statusBar.item.text = setting.statusBar.text + "(T)";
+        } else {
+          setting.statusBar.item.text = setting.statusBar.text + "(F)";
+        }
+      }
+      setting.statusBar.item.show();
+    } else {
+      setting.statusBar.item.hide();
+    }
   }
 }
 
