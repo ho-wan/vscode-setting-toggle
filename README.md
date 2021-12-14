@@ -19,6 +19,7 @@ This extension lets you toggle up to 3 custom settings defined in the `settings.
 <br>
 
 The commands to toggle the three settings are:
+
 - **Setting Toggle - Toggle Primary Setting**
 - **Setting Toggle - Toggle S1 Setting**
 - **Setting Toggle - Toggle S2 Setting**
@@ -38,30 +39,52 @@ The commands to toggle the three settings are:
 - `"toggle.showStatusbarS2"`: Show S2 toggle in status bar. Default is false.
 
 ---
+
 - The toggled setting gets automatically updated in your settings.json file.
 - CodeLens is toggled by default.
 - To toggle a custom setting, update your settings.json file with **"toggle.settingTitle":** to the name of the custom setting in the user settings, eg.
-``` JSON
+
+```JSON
     "toggle.settingTitle": "workbench.activityBar.visible",
 ```
+
 - To use the Setting 1 and 2, assign the setting name to setting1Title and setting2Title.
-``` JSON
+
+```JSON
     "toggle.setting1Title": "editor.codeLens",
     "toggle.setting2Title": "editor.parameterHints",
 ```
+
+### Language specific settings
+
+Language specific (nested) settings are supported by using the following syntax:
+```
+    "toggle.settingTitle": "[terraform]editor.codeLens",
+```
+Will toggle the following:
+```
+    "[terraform]": {
+        "editor.codeLens": false
+    },
+```
+
 ---
 
 <img src="https://raw.githubusercontent.com/Ho-Wan/vscode-setting-toggle/master/images/setting-toggle.gif" alt="setting-toggle-demo.gif">
 
 ---
+
 - To toggle a non-boolean setting, assign State1 and State2 the values you want to toggle between. The setting is only toggled if the current value matches either State1 or State2.
-``` JSON
+
+```JSON
     "editor.wordWrap": "off",
     "toggle.settingTitle": "editor.wordWrap",
     "toggle.settingState1": "off",
     "toggle.settingState2": "wordWrapColumn",
 ```
+
 ---
+
 Toggle font size using ints.
 
 <img src="https://raw.githubusercontent.com/Ho-Wan/vscode-setting-toggle/master/images/setting-toggle-states1.1.2a.gif" alt="setting-toggle-demo-states_ints.gif">
@@ -73,14 +96,9 @@ Toggle word wrap using custom strings.
 <img src="https://raw.githubusercontent.com/Ho-Wan/vscode-setting-toggle/master/images/setting-toggle-states1.1.2b.gif" alt="setting-toggle-demo-states_strings.gif">
 
 ---
+
 ## Known Issues
 
 - If "settings.json" is open with unsaved changes, the setting will not be toggled.
-- Nested settings are not supported, ie.
-```
-    "[terraform]": {
-        "editor.codeLens": false
-    },
-```
 
 ---

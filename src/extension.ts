@@ -104,10 +104,20 @@ function showInStatusBar() {
 
 export function deactivate() {}
 
+// Regex to match nested setting with parent setting in group 1
+// and child setting in group 2
+const reMatchNestedSetting = /^\[(.+)\](.*)$/;
+
 function toggleSetting(toggleTitle: string) {
   try {
-    const config = vscode.workspace.getConfiguration();
-    const settingTitle: string = config.get(toggleTitle);
+    let config = vscode.workspace.getConfiguration();
+    let settingTitle: string = config.get(toggleTitle);
+    let m = settingTitle.match(reMatchNestedSetting);
+    if (m && m.length === 3) {
+      let language = m[1];
+      config = vscode.workspace.getConfiguration("", { languageId: language });
+      settingTitle = m[2];
+    }
 
     let state = config.get(settingTitle);
     if (state == undefined) {
@@ -123,11 +133,11 @@ function toggleSetting(toggleTitle: string) {
       toggleCustom(config, settingTitle, state);
     } else {
       vscode.window.showErrorMessage(
-        `Setting Toggle: "${settingTitle}" has invalid type, must be boolean, number or string to toggle.`
+        `Setting Toggle: "${settingTitle}" has invalid type: must be boolean, number or string to toggle.`
       );
     }
   } catch (err) {
-    vscode.window.showErrorMessage("Setting Toggle: Error caught: " + err);
+    vscode.window.showErrorMessage("Setting Toggle: Error: " + err);
   }
 }
 
@@ -139,9 +149,9 @@ async function toggleBoolean(
   const newState = !oldState;
   const isGlobalSetting = true;
 
-  await config.update(settingTitle, newState, isGlobalSetting);
+  await config.update(settingTitle, newState, isGlobalSetting, true);
   vscode.window.showInformationMessage(
-    `Setting Toggle: Setting ${settingTitle} changed to ${newState}.`
+    `Setting Toggle: Setting "${settingTitle}" changed to "${newState}".`
   );
 }
 
