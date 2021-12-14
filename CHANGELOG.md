@@ -1,6 +1,10 @@
 # Change Log
 All notable changes to the "setting-toggle" extension will be documented in this file.
 
+## [1.5.1] (14 December 2021)
+- Language specific settings can now be toggled using the following syntax:
+`"toggle.settingTitle": "[terraform]editor.codeLens",`
+
 ## [1.5.0] (13 December 2021)
 - Add all 3 toggle settings to status bar, which can be clicked to toggle each one. By default, only the primary is shown, `settings.json` can be used to configure if each toggle is shown in status bar or not. State of boolean toggles will be shown as (T) or (F).
 
