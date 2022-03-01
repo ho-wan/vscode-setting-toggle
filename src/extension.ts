@@ -1,12 +1,15 @@
 "use strict";
 
 import * as vscode from "vscode";
-
 // name of setting states and default values specified in package.json
 const SettingState1: string = "toggle.settingState1";
 const SettingState2: string = "toggle.settingState2";
+const SettingState1Text: string = "toggle.settingState1Text";
+const SettingState2Text: string = "toggle.settingState2Text";
 const State1Default: string = "state1";
 const State2Default: string = "state2";
+const StateOn: string = vscode.workspace.getConfiguration().get("toggle.settingStatusContentOn");
+const StateOff: string = vscode.workspace.getConfiguration().get("toggle.settingStatusContentOff");
 
 type ToggleSetting = {
   title: string;
@@ -20,7 +23,7 @@ type ToggleSetting = {
   };
 };
 
-let Setting: { [key: string]: ToggleSetting } = {
+const Setting: { [key: string]: ToggleSetting } = {
   primary: {
     title: "toggle.settingTitle",
     command: "extension.toggle",
@@ -37,8 +40,8 @@ let Setting: { [key: string]: ToggleSetting } = {
     statusBar: {
       config: "toggle.showStatusbarS1",
       position: 2,
-      text: "S1",
-      tooltip: "Setting Toggle - S1 Setting",
+      text: vscode.workspace.getConfiguration().get("toggle.settingState1Text"),
+      tooltip: "Setting Toggle - State 1 Setting",
     },
   },
   s2: {
@@ -47,8 +50,8 @@ let Setting: { [key: string]: ToggleSetting } = {
     statusBar: {
       config: "toggle.showStatusbarS2",
       position: 1,
-      text: "S2",
-      tooltip: "Setting Toggle - S2 Setting",
+      text: vscode.workspace.getConfiguration().get("toggle.settingState2Text"),
+      tooltip: "Setting Toggle - State 2 Setting",
     },
   },
 };
@@ -84,16 +87,12 @@ function showInStatusBar() {
 
   for (const [, setting] of Object.entries(Setting)) {
     const settingTitle: string = config.get(setting.title);
-    // shows in status bar if config is enabled and setting has been found
+    // shows in the status bar if config is enabled and setting has been found
     if (config.get(setting.statusBar.config) && settingTitle) {
-      // show (T) or (F) in status bar for boolean status
-      let state = config.get(settingTitle);
-      if (state != undefined && typeof state === "boolean") {
-        if (state) {
-          setting.statusBar.item.text = setting.statusBar.text + "(T)";
-        } else {
-          setting.statusBar.item.text = setting.statusBar.text + "(F)";
-        }
+      // icon at the status bar for boolean status
+      const state = config.get(settingTitle);
+      if (state !== undefined && typeof state === "boolean") {
+        setting.statusBar.item.text = setting.statusBar.text + ": " + ( state ? StateOn : StateOff );
       }
       setting.statusBar.item.show();
     } else {
@@ -114,12 +113,12 @@ function toggleSetting(toggleTitle: string) {
     let settingTitle: string = config.get(toggleTitle);
     let m = settingTitle.match(reMatchNestedSetting);
     if (m && m.length === 3) {
-      let language = m[1];
+      const language = m[1];
       config = vscode.workspace.getConfiguration("", { languageId: language });
       settingTitle = m[2];
     }
 
-    let state = config.get(settingTitle);
+    const state = config.get(settingTitle);
     if (state == undefined) {
       vscode.window.showErrorMessage(
         `Setting Toggle: "${settingTitle}" is not a valid setting.`

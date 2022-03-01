@@ -108,6 +108,30 @@
           "description": "String or value representing state2, eg. \"off\"",
           "scope": "resource"
         },
+        "toggle.settingState1Text": {
+          "type": "string",
+          "default": "State 1",
+          "description": "Text that shows in status bar for state 1",
+          "scope": "resource"
+        },
+        "toggle.settingState2Text": {
+          "type": "string",
+          "default": "State 2",
+          "description": "Text that shows in status bar for state 2",
+          "scope": "resource"
+        },
+        "toggle.settingStatusContentOn": {
+          "type": "string",
+          "default": "$(eye)",
+          "description": "Text that shows in status bar for state 1",
+          "scope": "resource"
+        },
+        "toggle.settingStatusContentOff": {
+          "type": "string",
+          "default": "$(eye-closed)",
+          "description": "Text that shows in status bar for state 2",
+          "scope": "resource"
+        },
         "toggle.iconEnabled": {
           "type": "boolean",
           "default": true,
