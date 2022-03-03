@@ -3,7 +3,7 @@
   "displayName": "Setting Toggle",
   "description": "Toggle VS Code setting between two states.",
   "icon": "images/T-icon.png",
-  "version": "1.5.1",
+  "version": "1.6.0",
   "publisher": "Ho-Wan",
   "author": {
     "name": "Ho-Wan To",
@@ -106,6 +106,24 @@
         "toggle.settingState2": {
           "default": "state2",
           "description": "String or value representing state2, eg. \"off\"",
+          "scope": "resource"
+        },
+        "toggle.primarySettingText": {
+          "type": "string",
+          "default": "P",
+          "description": "Text that shows in status bar for primary setting",
+          "scope": "resource"
+        },
+        "toggle.settingState1Text": {
+          "type": "string",
+          "default": "State 1",
+          "description": "Text that shows in status bar for state 1",
+          "scope": "resource"
+        },
+        "toggle.settingState2Text": {
+          "type": "string",
+          "default": "State 2",
+          "description": "Text that shows in status bar for state 2",
           "scope": "resource"
         },
         "toggle.iconEnabled": {
