@@ -4,12 +4,13 @@ import * as vscode from "vscode";
 // name of setting states and default values specified in package.json
 const SettingState1: string = "toggle.settingState1";
 const SettingState2: string = "toggle.settingState2";
+const PrimarySettingText: string = "toggle.primarySettingText";
 const SettingState1Text: string = "toggle.settingState1Text";
 const SettingState2Text: string = "toggle.settingState2Text";
 const State1Default: string = "state1";
 const State2Default: string = "state2";
-const StateOn: string = vscode.workspace.getConfiguration().get("toggle.settingStatusContentOn");
-const StateOff: string = vscode.workspace.getConfiguration().get("toggle.settingStatusContentOff");
+const StateOn: string = "$(eye)";
+const StateOff: string = "$(eye-closed)";
 
 type ToggleSetting = {
   title: string;
@@ -30,7 +31,7 @@ const Setting: { [key: string]: ToggleSetting } = {
     statusBar: {
       config: "toggle.showStatusbarPrimary",
       position: 3,
-      text: "P",
+      text: vscode.workspace.getConfiguration().get(PrimarySettingText),
       tooltip: "Setting Toggle - Primary Setting",
     },
   },
@@ -40,7 +41,7 @@ const Setting: { [key: string]: ToggleSetting } = {
     statusBar: {
       config: "toggle.showStatusbarS1",
       position: 2,
-      text: vscode.workspace.getConfiguration().get("toggle.settingState1Text"),
+      text: vscode.workspace.getConfiguration().get(SettingState1Text),
       tooltip: "Setting Toggle - State 1 Setting",
     },
   },
@@ -50,7 +51,7 @@ const Setting: { [key: string]: ToggleSetting } = {
     statusBar: {
       config: "toggle.showStatusbarS2",
       position: 1,
-      text: vscode.workspace.getConfiguration().get("toggle.settingState2Text"),
+      text: vscode.workspace.getConfiguration().get(SettingState2Text),
       tooltip: "Setting Toggle - State 2 Setting",
     },
   },
