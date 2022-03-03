@@ -1,6 +1,10 @@
 # Change Log
 All notable changes to the "setting-toggle" extension will be documented in this file.
 
+## [1.6.0] (03 March 2022)
+- Enable text in status bar to be customized.
+- Use eye icon to show if feature is on or off.
+
 ## [1.5.1] (14 December 2021)
 - Language specific settings can now be toggled using the following syntax:
 `"toggle.settingTitle": "[terraform]editor.codeLens",`
