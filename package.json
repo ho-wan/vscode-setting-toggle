@@ -131,6 +131,12 @@
           "default": true,
           "description": "Show Setting Toggle icon",
           "scope": "resource"
+        },
+        "toggle.showInformationMessages": {
+          "type": "boolean",
+          "default": true,
+          "description": "Show information message after toggling a setting",
+          "scope": "resource"
         }
       }
     }

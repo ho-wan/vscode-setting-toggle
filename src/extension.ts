@@ -150,9 +150,11 @@ async function toggleBoolean(
   const isGlobalSetting = true;
 
   await config.update(settingTitle, newState, isGlobalSetting, true);
-  vscode.window.showInformationMessage(
-    `Setting Toggle: Setting "${settingTitle}" changed to "${newState}".`
-  );
+  if (vscode.workspace.getConfiguration().get<boolean>("toggle.showInformationMessages")) {
+    vscode.window.showInformationMessage(
+      `Setting Toggle: Setting "${settingTitle}" changed to "${newState}".`
+    );
+  }
 }
 
 async function toggleCustom(
@@ -185,7 +187,9 @@ async function toggleCustom(
 
   const isGlobalSetting = true;
   await config.update(settingTitle, newState, isGlobalSetting);
-  vscode.window.showInformationMessage(
-    `Setting Toggle: ${settingTitle} changed to ${newState}.`
-  );
+  if (vscode.workspace.getConfiguration().get<boolean>("toggle.showInformationMessages")) {
+    vscode.window.showInformationMessage(
+      `Setting Toggle: ${settingTitle} changed to ${newState}.`
+    );
+  }
 }
