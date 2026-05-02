@@ -15,7 +15,7 @@
   },
   "bugs": "https://github.com/ho-wan/vscode-setting-toggle/issues",
   "engines": {
-    "vscode": "^1.58.0"
+    "vscode": "^1.118.0"
   },
   "categories": [
     "Other"
@@ -139,13 +139,13 @@
     "vscode:prepublish": "npm run compile",
     "compile": "tsc -p ./",
     "watch": "tsc -watch -p ./",
-    "postinstall": "node ./node_modules/vscode/bin/install",
-    "test": "npm run compile && node ./node_modules/vscode/bin/test"
+    "test": "npm run compile"
   },
   "devDependencies": {
-    "@types/mocha": "^8.2.2",
-    "@types/node": "^15.12.1",
-    "typescript": "^4.3.2",
-    "vscode": "^1.1.37"
+    "@types/mocha": "^10.0.10",
+    "@types/node": "^20.0.0",
+    "@types/vscode": "^1.118.0",
+    "@vscode/test-electron": "^2.5.2",
+    "typescript": "^6.0.3"
   }
 }
