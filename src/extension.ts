@@ -9,6 +9,7 @@ const SettingState1Text: string = "toggle.settingState1Text";
 const SettingState2Text: string = "toggle.settingState2Text";
 const State1Default: string = "state1";
 const State2Default: string = "state2";
+const IconEnabled: string = "toggle.iconEnabled";
 const StateOn: string = "$(eye)";
 const StateOff: string = "$(eye-closed)";
 
@@ -89,7 +90,7 @@ function showInStatusBar() {
   for (const [, setting] of Object.entries(Setting)) {
     const settingTitle: string = config.get(setting.title);
     // shows in the status bar if config is enabled and setting has been found
-    if (config.get(setting.statusBar.config) && settingTitle) {
+    if (config.get(setting.statusBar.config) && settingTitle && config.get(IconEnabled)) {
       // icon at the status bar for boolean status
       const state = config.get(settingTitle);
       if (state !== undefined && typeof state === "boolean") {
