@@ -1,6 +1,11 @@
 # Change Log
 All notable changes to the "setting-toggle" extension will be documented in this file.
 
+## [1.7.0] (02 May 2026)
+- Fix bug in `"toggle.iconEnabled"`
+- Add `"toggle.showInformationMessages"` option to hide toggle notifications
+- Add `"toggle.useWorkspaceSettings"` option to toggle in Workspace settings instead of global User settings
+
 ## [1.6.0] (03 March 2022)
 - Enable text in status bar to be customized.
 - Use eye icon to show if feature is on or off.
