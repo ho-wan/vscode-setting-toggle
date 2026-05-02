@@ -10,6 +10,7 @@ const SettingState2Text: string = "toggle.settingState2Text";
 const State1Default: string = "state1";
 const State2Default: string = "state2";
 const IconEnabled: string = "toggle.iconEnabled";
+const UseWorkspaceSettings: string = "toggle.useWorkspaceSettings";
 const StateOn: string = "$(eye)";
 const StateOff: string = "$(eye-closed)";
 
@@ -128,10 +129,11 @@ function toggleSetting(toggleTitle: string) {
       return;
     }
 
+    const isGlobalSetting = !vscode.workspace.getConfiguration().get<boolean>(UseWorkspaceSettings);
     if (typeof state === "boolean") {
-      toggleBoolean(config, settingTitle, state);
+      toggleBoolean(config, settingTitle, state, isGlobalSetting);
     } else if (typeof state === "number" || typeof state === "string") {
-      toggleCustom(config, settingTitle, state);
+      toggleCustom(config, settingTitle, state, isGlobalSetting);
     } else {
       vscode.window.showErrorMessage(
         `Setting Toggle: "${settingTitle}" has invalid type: must be boolean, number or string to toggle.`
@@ -145,10 +147,10 @@ function toggleSetting(toggleTitle: string) {
 async function toggleBoolean(
   config: vscode.WorkspaceConfiguration,
   settingTitle: string,
-  oldState: boolean
+  oldState: boolean,
+  isGlobalSetting: boolean
 ) {
   const newState = !oldState;
-  const isGlobalSetting = true;
 
   await config.update(settingTitle, newState, isGlobalSetting, true);
   if (vscode.workspace.getConfiguration().get<boolean>("toggle.showInformationMessages")) {
@@ -161,7 +163,8 @@ async function toggleBoolean(
 async function toggleCustom(
   config: vscode.WorkspaceConfiguration,
   settingTitle: string,
-  oldState: number | string
+  oldState: number | string,
+  isGlobalSetting: boolean
 ) {
   const settingState1: number | string = config.get(SettingState1);
   const settingState2: number | string = config.get(SettingState2);
@@ -186,7 +189,6 @@ async function toggleCustom(
     return;
   }
 
-  const isGlobalSetting = true;
   await config.update(settingTitle, newState, isGlobalSetting);
   if (vscode.workspace.getConfiguration().get<boolean>("toggle.showInformationMessages")) {
     vscode.window.showInformationMessage(

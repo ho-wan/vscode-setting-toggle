@@ -137,6 +137,12 @@
           "default": true,
           "description": "Show information message after toggling a setting",
           "scope": "resource"
+        },
+        "toggle.useWorkspaceSettings": {
+          "type": "boolean",
+          "default": false,
+          "description": "Toggle setting in Workspace settings instead of global User settings",
+          "scope": "resource"
         }
       }
     }
