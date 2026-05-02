@@ -37,10 +37,14 @@ The commands to toggle the three settings are:
 - `"toggle.showStatusbarPrimary"`: Show Primary toggle in status bar. Default is true.
 - `"toggle.showStatusbarS1"`: Show S1 toggle in status bar. Default is false.
 - `"toggle.showStatusbarS2"`: Show S2 toggle in status bar. Default is false.
+- `"toggle.showInformationMessages"`: Show notification message after toggling a setting. Default is true.
+- `"toggle.useWorkspaceSettings"`: Toggle setting in Workspace settings instead of global User settings. Default is false.
 
 ---
 
-- The toggled setting gets automatically updated in your settings.json file.
+- The toggled setting gets automatically updated in your global User
+  `settings.json` file by default. Set `"toggle.useWorkspaceSettings": true` to
+  write to the Workspace `settings.json` instead.
 - CodeLens is toggled by default.
 - To toggle a custom setting, update your settings.json file with **"toggle.settingTitle":** to the name of the custom setting in the user settings, eg.
 
